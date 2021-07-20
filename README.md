@@ -27,9 +27,8 @@ export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH
 From an CentOS 7 ESSS development environment with CUDA provisioned by fett:
 ```bash
 mkdir build && cd build
-cmake -DCMAKE_CXX_COMPILER=g++ -DCMAKE_CUDA_COMPILER=$CUDA_PATH_V11_1/bin/nvcc -DCUDA_TOOLKIT_ROOT_DIR=$CUDA_PATH_V11_1 ..
+cmake -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_CUDA_COMPILER=$CUDA_PATH_V11_1/bin/nvcc -DCUDA_TOOLKIT_ROOT_DIR=$CUDA_PATH_V11_1 ..
 make -j
-make install
 ```
 
 From a debian-based environment with CUDA installed at `/usr`
