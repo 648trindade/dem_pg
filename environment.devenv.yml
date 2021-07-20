@@ -1,8 +1,8 @@
 name: dem_pg
 
 dependencies:
-  - clangxx==11
-  - libcxx==11
-  - llvm-openmp==11
-  - clang-tools==11
+  - clangxx==10
+  - libcxx==10
+  - llvm-openmp==10
+  - clang-tools==10
   - "cmake>=3.8"
