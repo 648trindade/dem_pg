@@ -1,0 +1,8 @@
+name: dem_pg
+
+dependencies:
+  - clangxx==11
+  - libcxx==11
+  - llvm-openmp==11
+  - clang-tools==11
+  - "cmake>=3.8"

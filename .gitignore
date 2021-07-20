@@ -1,0 +1,4 @@
+environment.yml
+build/
+bin/
+*.o
