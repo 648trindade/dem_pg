@@ -12,6 +12,8 @@ set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR})
 find_package(OpenMP REQUIRED)
 find_package(CUDA REQUIRED)
 
+set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} ${OpenMP_CXX_FLAGS}")
+
 add_executable(
     dem_pg
     "src/c++/main.cpp"
