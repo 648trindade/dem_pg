@@ -6,3 +6,11 @@ dependencies:
   - llvm-openmp==10
   - clang-tools==10
   - "cmake>=3.8"
+
+environment:
+  LIBRARY_PATH:
+    - $CONDA_PREFIX/lib
+    - $LIBRARY_PATH
+  LD_LIBRARY_PATH:
+    - $CONDA_PREFIX/lib
+    - $LD_LIBRARY_PATH

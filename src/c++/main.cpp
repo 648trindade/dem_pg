@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
     /* ------------------------------- CUDA -----------------------------------------*/
 
     // reset result matrix
-    matrix_C.assign(rows * columns, 0.0);
+    matrix_C.assign(rows * columns, middle * 2);
 
     begin = omp_get_wtime();
 
