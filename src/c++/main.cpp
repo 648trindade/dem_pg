@@ -1,8 +1,9 @@
 #include "dgemm.h"
 
+#include <omp.h>
+
 #include <cstdlib>
 #include <iostream>
-#include <omp.h>
 #include <stdexcept>
 #include <string>
 
