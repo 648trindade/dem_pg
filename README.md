@@ -6,8 +6,6 @@ From an CentOS 7 ESSS development environment with conda-devenv
 ```bash
 conda devenv
 conda activate dem_pg
-export LIBRARY_PATH=$CONDA_PREFIX/lib:$LIBRARY_PATH
-export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH
 ```
 
 From a debian-based environment with conda installed
