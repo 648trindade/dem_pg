@@ -1,6 +1,7 @@
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
 #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lc++abi")
 set(CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CUDA_HOST_COMPILER "${CMAKE_CXX_COMPILER}")
 set(CMAKE_CUDA_STANDARD 17)
 set(CMAKE_CUDA_STANDARD_REQUIRED ON)
@@ -38,11 +39,15 @@ add_executable(
     "src/c++/main.cpp"
 )
 
-
 target_link_libraries(dem_pg dem_pg_omp)
 target_link_libraries(dem_pg dem_pg_cuda)
 
 install(
     TARGETS dem_pg
     RUNTIME DESTINATION "bin"
+)
+
+add_executable(
+    "test_dem_simulation"
+    "src/c++/test_dem_simulation.cpp"
 )
