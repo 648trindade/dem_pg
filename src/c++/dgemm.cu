@@ -2,13 +2,18 @@
 
 #include <omp.h>
 
+#include <iostream>
 #include <string>
 #include <stdexcept>
 
-__global__ void do_dgemm()
+__global__ void do_dgemm(double* A, double* B, double* C, int rows, int middle, int columns)
 {
-    int index = blockIdx.x * blockDim.x + threadIdx.x;
-    printf("Hello World from %d!\n", index);
+    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    int j = blockIdx.y * blockDim.y + threadIdx.y;
+
+    if (i < rows && j < columns)
+        for (int k = 0; k < middle; k++)
+            C[i * columns + j] += A[i * middle + k] * B[k * columns + j];
 }
 
 void cuda_dgemm(const std::vector<double>& A, const std::vector<double>& B, std::vector<double>& C, int rows, int middle, int columns)
@@ -22,8 +27,12 @@ void cuda_dgemm(const std::vector<double>& A, const std::vector<double>& B, std:
     cudaMemcpy(d_B, B.data(), sizeof(double) * middle * columns, cudaMemcpyHostToDevice);
     cudaMemcpy(d_C, C.data(), sizeof(double) * rows * columns, cudaMemcpyHostToDevice);
 
-    //dim3 block();
-    do_dgemm<<<2, 4>>>();
+    dim3 block(32, 32);
+    dim3 grid(std::ceil(rows / 32.0), std::ceil(columns / 32.0));
+
+    do_dgemm<<<grid, block>>>(d_A, d_B, d_C, rows, middle, columns);
+
+    cudaMemcpy(C.data(), d_C, sizeof(double) * rows * columns, cudaMemcpyDeviceToHost);
 
     cudaFree(d_A);
     cudaFree(d_B);
