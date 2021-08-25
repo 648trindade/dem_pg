@@ -46,3 +46,15 @@ install(
     TARGETS dem_pg
     RUNTIME DESTINATION "bin"
 )
+
+# cuBLAS example
+cuda_add_executable(
+    cublas-example
+    ./src/c++/linear-algebra/cublas-01.cu
+)
+
+file(TO_CMAKE_PATH $ENV{CONDA_PREFIX}/Library/include/ CONDA_INCLUDE_PATH)
+target_include_directories(cublas-example PRIVATE ${CONDA_INCLUDE_PATH})
+set_target_properties(cublas-example PROPERTIES CUDA_ARCHITECTURES 75)
+set_target_properties(cublas-example PROPERTIES CXX_STANDARD 17)
+cuda_add_cublas_to_target(cublas-example)
