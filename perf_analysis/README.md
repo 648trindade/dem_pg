@@ -176,3 +176,26 @@ const int num_colors = sizeof(colors)/sizeof(uint32_t);
 #define POP_RANGE
 #endif
 ```
+
+## Reading/Support Materials
+
+### Fundamental Optimizations - CUDA architecture overview, memory hierarchy, access patterns: 
+ - http://developer.download.nvidia.com/GTC/PDF/1083_Wang.pdf
+ - Part 2: https://www.olcf.ornl.gov/wp-content/uploads/2020/04/04-CUDA-Fundamental-Optimization-Part-2.pdf
+ - In-depth optimization: https://on-demand.gputechconf.com/gtc/2013/presentations/S3466-Programming-Guidelines-GPU-Architecture.pdf
+
+### Local Memory and Register Spilling:
+https://on-demand.gputechconf.com/gtc-express/2011/presentations/register_spilling.pdf
+- Local mem access usually when one runs out of SM resources
+  - Local mem bytes are stored in global mem
+  - Stores are cached in L1, lmem cache lines can be evicted and end up in global mem
+- Hurt performance causing increased *memory traffic* or increased *instruction count*
+
+### CUDA Optimization Tips and Tricks
+https://on-demand.gputechconf.com/gtc/2017/presentation/s7122-stephen-jones-cuda-optimization-tips-tricks-and-techniques.pdf
+
+### Analysis Driven Optimization
+https://developer.download.nvidia.com/GTC/PDF/1082_Wang.pdf
+
+### List of tools and usage:
+https://www.vi-hps.org/cms/upload/material/general/ToolsGuide.pdf
