@@ -1,16 +1,16 @@
-﻿#include <iostream>
+﻿#include <simulator/particle.hpp>
+#include <simulator/boundaries.hpp>
+#include <simulator/analitic_geometry.hpp>
+#include <simulator/interaction_forces.hpp>
+#include <simulator/domain.hpp>
+#include <simulator/integrator.hpp>
+#include <simulator/my_types.hpp>
+
+#include <iostream>
 #include <vector>
 #include <memory>
 #include <string>
 #include <assert.h>  
-
-#include "particle.h"
-#include "boundaries.h"
-#include "analitic_geometry.h"
-#include "interaction_forces.h"
-#include "domain.h"
-#include "integrator.h"
-#include "my_types.h"
 
 using namespace geometric;
 

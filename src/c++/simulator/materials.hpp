@@ -1,20 +1,21 @@
 ﻿#pragma once
 
-#include "my_types.h"
-
+#include <simulator/my_types.hpp>
 
 struct IMaterial
 {
-	double density {};
-	double young_modulus {};
-	double poisson_ration {};
-	
+public:
 	virtual Material get_type() = 0;
-	
+
 	double get_density() const
 	{
 		return density;
 	}
+
+public:
+	double density;
+	double young_modulus;
+	double poisson_ration;
 };
 
 struct LinearMaterial : public IMaterial

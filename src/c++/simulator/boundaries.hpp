@@ -1,10 +1,11 @@
 ﻿
 #pragma once
 
+#include <simulator/geometry.hpp>
+#include <simulator/particle.hpp>
+#include <simulator/my_types.hpp>
+
 #include <iostream>
-#include "geometry.h"
-#include "particle.h"
-#include "my_types.h"
 
 struct Boundary : public IParticle
 {
@@ -19,34 +20,35 @@ struct Boundary : public IParticle
 	double get_radius() {return -1.0;}
 };
 
-
 struct Wall : public Boundary
 {
 	InfinityPlane* geometry;
 	
-	Wall(double x, double y, double z, double nx, double ny, double nz ) :
-	geometry(new InfinityPlane(x, y, z, nx, ny, nz))
+	Wall(double x, double y, double z, double nx, double ny, double nz )
+		: geometry(new InfinityPlane(x, y, z, nx, ny, nz))
 	{
 	}
 	
-	Entity get_type() override {return Entity::Wall;}
-	
+	Entity get_type() override
+	{
+		return Entity::Wall;
+	}
+
 	void print() override
 	{
 		geometry->point.print();
 		geometry->normal.print();
 	}
-	
+
 	Point get_point() override
 	{
 		return geometry->point;
-	};
-	
+	}
+
 	Vector get_unitary_normal() override
 	{
 		return geometry->get_unitary_normal();
-	};
-	
+	}
 };
 
 struct InfinityHorizontalWall : public Wall
@@ -62,6 +64,3 @@ struct InfinityVerticalWall : public Wall
 	Wall(x, 0.0, 0.0, 1.0, 0.0, 0.0)
 	{}	
 };
-
-
-	

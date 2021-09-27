@@ -1,11 +1,11 @@
 ﻿#pragma once
+
+#include <simulator/particle.hpp>
+#include <simulator/analitic_geometry.hpp>
+#include <simulator/contact.hpp>
+
 #include <iostream>
 #include <memory>
-
-#include "particle.h"
-#include "analitic_geometry.h"
-#include "contact.h"
-
 
 struct InteractionForce
 {
@@ -14,7 +14,6 @@ struct InteractionForce
 
 struct ContactForce : public InteractionForce
 {
-	
 	void add_force(std::shared_ptr<ParticleSet> paticle_set) 
 	{
 		ContactPair* contact_pair_ptr = reinterpret_cast<ContactPair*>(paticle_set.get());
@@ -29,12 +28,13 @@ struct ContactForce : public InteractionForce
 	void add_force(std::shared_ptr<ContactPair> contact_set)
 	{
 		
-		auto& p1 = contact_set->particles.at(0) ;
+		auto& p1 = contact_set->particles.at(0);
 		auto& p2 = contact_set->particles.at(1);
 		double d = Polymorphic::distance(p1.get(), p2.get());
 
-		if (d >= 0.0)
+		if (d >= 0.0) {
 			return;
+		}
 		
 		Vector direction = p1->position - p2->position;
 		Force force = direction*(stiffness/direction.norm());
@@ -42,7 +42,6 @@ struct ContactForce : public InteractionForce
 		// action and reaction
 		p2->add_force(force*-1.0);
 		p1->add_force(force);
-		  
 	};
 
 	static double stiffness;
@@ -57,25 +56,23 @@ struct InteractionForceCollection
 	void add_interaction_force(InteractionForce* interaction_force)
 	{
 		add_interaction_force(std::make_shared<InteractionForce>(*interaction_force));
-	};
+	}
 
 	void add_interaction_force(std::shared_ptr<InteractionForce> interaction_force)
 	{
 		interaction_forces.push_back(interaction_force);
-	};
+	}
 
 	void add_interaction_force(ContactForce* interaction_force)
 	{
 		add_interaction_force(std::make_shared<ContactForce>(*interaction_force));
-	};
+	}
 
 	void add_interaction_force(std::shared_ptr<ContactForce> interaction_force)
 	{
 		interaction_forces.push_back(interaction_force);
-	};
-
+	}
 };
-
 
 struct InteractionForceAssembler
 {
@@ -84,8 +81,12 @@ struct InteractionForceAssembler
 	
 	InteractionForceAssembler(){};
 	
-	InteractionForceAssembler(ParticleCollection& collection, InteractionForceCollection& interaction_forces_collection):
-	collection(collection), interaction_forces_collection(interaction_forces_collection)
+	InteractionForceAssembler(
+		ParticleCollection& collection,
+		InteractionForceCollection& interaction_forces_collection
+	)
+		: collection(collection),
+		interaction_forces_collection(interaction_forces_collection)
 	{
 	};
 };

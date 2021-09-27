@@ -1,11 +1,10 @@
 ﻿#pragma once
 
 #include <iostream>
-#include "geometry.h"
-#include "mechanics.h"
-#include "my_types.h"
-#include "materials.h"
-
+#include <simulator/geometry.hpp>
+#include <simulator/mechanics.hpp>
+#include <simulator/my_types.hpp>
+#include <simulator/materials.hpp>
 
 struct IParticle
 {
@@ -59,7 +58,6 @@ struct IParticle
 		this->position += this->velocity*delta_t;
 		this->reset_force();
 	}
-
 	
 	void print_position() const 
 	{
@@ -76,7 +74,6 @@ struct IParticle
 		std::cout << " {"<< this->force.x << ", " << this->force.y << ", " << this->force.z << "} ";	
 	}
 };
-
 
 struct SphericParticle : public IParticle 
 {

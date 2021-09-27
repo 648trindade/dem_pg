@@ -1,7 +1,7 @@
-﻿#include <iostream>
+﻿#include <simulator/geometry.hpp>
+#include <simulator/analitic_geometry.hpp>
 
-#include "geometry.h"
-#include "analitic_geometry.h"
+#include <iostream>
 
 using namespace geometric;
 

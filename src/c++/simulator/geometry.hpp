@@ -12,13 +12,17 @@ struct Point
 {
 	double x, y, z;
 	
-	Point() :
-	x(0.0), y(0.0), z(0.0)
+	Point()
+		: x(0.0)
+		, y(0.0)
+		, z(0.0)
 	{
 	}
 	
-	Point(double x, double y, double z) :
-	x(x), y(y), z(z)
+	Point(double x, double y, double z)
+		: x(x)
+		, y(y)
+		, z(z)
 	{
 	}
 	
@@ -70,7 +74,6 @@ struct Point
 		return *this;
 	}
 	
-	
 	double norm()
 	{
 		return std::sqrt((x)*(x) + (y)*(y) + (z)*(z));
@@ -92,9 +95,7 @@ struct Point
 	}
 };
 
-
 using Vector = Point;
-
 
 struct IGeometry
 {
@@ -121,8 +122,9 @@ struct InfinityPlane : public PrimitiveGeometry
 {
 	Point point;
 	Vector normal;
-	InfinityPlane(double x, double y, double z, double nx, double ny, double nz) :
-	point(Point(x,y,z)),normal(Vector(nx,ny,nz))
+	InfinityPlane(double x, double y, double z, double nx, double ny, double nz)
+		: point(Point(x,y,z))
+		, normal(Vector(nx,ny,nz))
 	{}
 	
 	Vector get_unitary_normal()
@@ -130,20 +132,24 @@ struct InfinityPlane : public PrimitiveGeometry
 		return normal*(1.0/normal.norm());
 	}
 	
-	double get_volume() override {return 0.0;}
-	double get_surface() override {return 0.0;}
-	 
+	double get_volume() override
+	{
+		return 0.0;
+	}
+
+	double get_surface() override
+	{
+		return 0.0;
+	}
 };
 
 struct Sphere : public PrimitiveGeometry 
 {
-	Point center;
-	double radius;
-
-	Sphere(double x, double y, double z, double radius) 
+public:
+	Sphere(double x, double y, double z, double radius)
+		: center(Point{x, y, z})
+		, radius(radius)
 	{
-		center = Point{x, y, z};
-		this->radius = radius;
 	}
 	
 	Sphere(double radius) : center(Point{0.0, 0.0, 0.0}), radius(radius)
@@ -151,12 +157,25 @@ struct Sphere : public PrimitiveGeometry
 		Sphere(0.0, 0.0, 0.0, radius);
 	}
 	
-	double get_volume() override {return get_surface()*radius/3.0;}
-	double get_surface() override {return 4.0*M_PI*radius*radius;};
-	double get_radius() override {return radius;};
+	double get_volume() override
+	{
+		return get_surface() * radius / 3.0;
+	}
 
+	double get_surface() override
+	{
+		return 4.0 * M_PI * radius * radius;
+	}
+
+	double get_radius() override
+	{
+		return radius;
+	}
+
+public:
+	Point center;
+	double radius;
 };
-
 
 struct Edge : public PrimitiveGeometry 
 {
@@ -180,9 +199,15 @@ struct Edge : public PrimitiveGeometry
 		return v/v.norm();
 	}
 
-	double get_volume() override {return 0.0;};
-	double get_surface() override {return 0.0;};
-	
+	double get_volume() override
+	{
+		return 0.0;
+	}
+
+	double get_surface() override
+	{
+		return 0.0;
+	}
 };
 
 struct PlanarGeometry : public PrimitiveGeometry 
@@ -201,7 +226,10 @@ struct PlanarGeometry : public PrimitiveGeometry
 		return v/v.norm();
 	}
 	
-	double get_volume() override {return 0.0;};
+	double get_volume() override
+	{
+		return 0.0;
+	}
 };
 
 struct Square : public PlanarGeometry 
@@ -220,12 +248,13 @@ struct Square : public PlanarGeometry
 		edges.push_back(Edge(p3, p2));
 		edges.push_back(Edge(p4, p1));
 		edges.push_back(Edge(p1, p2));
-		
 	}
 	
-	double get_surface() override {return 0.0;};
+	double get_surface() override
+	{
+		return 0.0;
+	}
 };
-
 
 struct Triangule : public PlanarGeometry 
 {
@@ -242,7 +271,6 @@ struct Triangule : public PlanarGeometry
 		this->edges.push_back(Edge(p2, p1));
 		this->edges.push_back(Edge(p3, p2));
 		this->edges.push_back(Edge(p3, p1));
-		
 	}
 
 	double get_surface() override 
@@ -252,5 +280,4 @@ struct Triangule : public PlanarGeometry
 		Vector n = v2.cross(v1);
 		return 0.5*n.norm();
 	}
-	
 };
