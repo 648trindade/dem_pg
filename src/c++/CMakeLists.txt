@@ -27,22 +27,32 @@ add_library(
     dem_base
     STATIC
        ${BASE_LIB_FILES}
- )
+)
+
+add_library(
+    test_main
+    STATIC
+       simulator/test_main.cpp
+)
 
 add_executable(
     test_simulator
+        catch.hpp
         simulator/test_dem_simulation.cpp
 )
 target_link_libraries(
     test_simulator
-    dem_base
+        test_main
+        dem_base
 )
 
 add_executable(
     test_geometry
+        catch.hpp
         simulator/test_geometry.cpp
 )
 target_link_libraries(
     test_geometry
-    dem_base
+        test_main
+        dem_base
 )

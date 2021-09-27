@@ -56,5 +56,4 @@ void Domain::integrate(double delta_t)
 	}
 
 	_time += delta_t;
-	std::cout <<"Current time = " << _time << std::endl;
 }

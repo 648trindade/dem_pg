@@ -53,7 +53,12 @@ struct SphericParticle : public IParticle
 		double r,
 		double rho = 1.0
 	);
-	SphericParticle(Position p, Velocity v, double r, LinearMaterial m);
+	SphericParticle(
+		Position p,
+		Velocity v,
+		double r,
+		LinearMaterial* m
+	);
 	~SphericParticle();
 	Entity get_type() override;
 	double get_radius() override;

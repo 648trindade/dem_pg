@@ -24,8 +24,8 @@ void IParticle::reset_force()
 
 void IParticle::move(double delta_t)
 {
-	this->velocity += this->force*(delta_t/this->get_mass());
-	this->position += this->velocity*delta_t;
+	this->velocity += this->force * (delta_t / this->get_mass());
+	this->position += this->velocity * delta_t;
 	this->reset_force();
 }
 
@@ -61,12 +61,17 @@ SphericParticle::SphericParticle(
 	material = new LinearMaterial(rho);
 }
 
-SphericParticle::SphericParticle(Position p, Velocity v, double r, LinearMaterial m) 
+SphericParticle::SphericParticle(
+	Position p,
+	Velocity v,
+	double r,
+	LinearMaterial* m
+)
 {
 	position = p;
 	velocity = v;
 	geometry = new Sphere(r);
-	material = &m;
+	material = m;
 }
 
 SphericParticle::~SphericParticle()
