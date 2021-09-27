@@ -5,28 +5,40 @@
 #include "mechanics.h"
 #include "my_types.h"
 #include "materials.h"
+
+
 struct IParticle
 {
-	Position position {0.0, 0.0, 0.0 };
-	Velocity velocity {0.0, 0.0, 0.0 };
-	Force force {0.0, 0.0, 0.0 };
+	Position position {0.0, 0.0, 0.0};
+	Velocity velocity {0.0, 0.0, 0.0};
+	Force force {0.0, 0.0, 0.0};
 	IMaterial* material;
-	double _mass {1.0};
+	IGeometry* geometry;
 	
-	IParticle() {};
+	virtual Entity get_type() = 0;
+
+	virtual double get_radius() = 0;
 	
-	IParticle(double x, double y, double z, double vx, double vy, double vz) :
-	position(x,y,z),velocity(vx,vy,vz),force(0.0, 0.0, 0.0), material(nullptr),_mass(1.0)
-	{} 
-	
-	virtual Entity get_type()
+	template<class T*>
+	void set_material(T* material)
 	{
-		return Entity::IParticle;
+		this->material = material;
+	}
+	
+	template<class T*>
+	void set_geometry(T* g)
+	{
+		this->geometry = g;
+	}
+	
+	double get_density()
+	{
+		return material->get_density();	
 	}
 	
 	double get_mass()
 	{
-		return _mass;	
+		return geometry->get_volume()*material->get_density();	
 	}
 	
 	void add_force(const Force& force )
@@ -48,10 +60,6 @@ struct IParticle
 		this->reset_force();
 	}
 
-	virtual double get_radius()
-	{
-		return 0.0;
-	}
 	
 	void print_position() const 
 	{
@@ -72,19 +80,36 @@ struct IParticle
 
 struct SphericParticle : public IParticle 
 {
-	double r {0.0}; 
 	
-	SphericParticle(double x, double y, double z, double vx, double vy, double vz, double r) :
-	IParticle( x,y,z,vx,vy,vz),r(r) 
-	{}
+	SphericParticle(double x, double y, double z, double vx, double vy, double vz, double r, double rho = 1.0)
+	{
+		position = Position{x, y, z}; 
+		velocity = Velocity {vx,vy,vz}; 
+		geometry = new Sphere(r);
+		material = new LinearMaterial(rho);
+	}
+	
+	SphericParticle(Position p, Velocity v, double r, LinearMaterial m) 
+	{
+		position = p;
+		velocity = v;
+		geometry = new Sphere(r);
+		material = &m;
+	}
+	
+	~SphericParticle()
+	{
+		//delete material;
+		//delete geometry;
+	}
 	
 	Entity get_type() override
 	{
 		return Entity::SphericParticle;
 	}
-
+	
 	double get_radius() override
 	{
-		return this->r;
+		return this->geometry->get_radius();
 	}
 };

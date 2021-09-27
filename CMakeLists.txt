@@ -31,7 +31,7 @@ cuda_add_library(
     "src/c++/dgemm.cu"
 )
 
-set_property(TARGET dem_pg_cuda PROPERTY CUDA_ARCHITECTURES 75)
+set_property(TARGET dem_pg_cuda PROPERTY CUDA_ARCHITECTURES 63)
 set_property(TARGET dem_pg_cuda PROPERTY CXX_STANDARD 17)
 
 add_executable(

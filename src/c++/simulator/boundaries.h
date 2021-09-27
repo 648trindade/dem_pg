@@ -16,15 +16,16 @@ struct Boundary : public IParticle
 	Entity get_type() override {return Entity::Boundary;}
 	
 	virtual void print() {}
+	double get_radius() {return -1.0;}
 };
 
 
 struct Wall : public Boundary
 {
-	InfinityPlane geometry;
+	InfinityPlane* geometry;
 	
 	Wall(double x, double y, double z, double nx, double ny, double nz ) :
-	geometry(InfinityPlane(x, y, z, nx, ny, nz))
+	geometry(new InfinityPlane(x, y, z, nx, ny, nz))
 	{
 	}
 	
@@ -32,18 +33,18 @@ struct Wall : public Boundary
 	
 	void print() override
 	{
-		geometry.point.print();
-		geometry.normal.print();
+		geometry->point.print();
+		geometry->normal.print();
 	}
 	
 	Point get_point() override
 	{
-		return geometry.point;
+		return geometry->point;
 	};
 	
 	Vector get_unitary_normal() override
 	{
-		return geometry.get_unitary_normal();
+		return geometry->get_unitary_normal();
 	};
 	
 };

@@ -13,3 +13,9 @@ enum class Set
 	ContactPair,
 	ContactBoundary,
 };
+
+enum class Material
+{
+	IMaterial,
+	LinearMaterial,
+};

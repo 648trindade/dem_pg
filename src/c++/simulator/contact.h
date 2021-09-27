@@ -15,13 +15,6 @@ struct ContactPair : public ParticleSet
 
 	std::vector<std::shared_ptr<IParticle>> particles;
 	
-	ContactPair(IParticle& i, IParticle& j)
-	{
-
-		particles.push_back(std::make_shared<IParticle>(i));
-		particles.push_back(std::make_shared<IParticle>(j));
-	};
-
 	ContactPair(SphericParticle& i, SphericParticle& j) 
 	{
 		
@@ -39,9 +32,7 @@ struct ContactPair : public ParticleSet
 	{
 		particles.push_back(i);
 		particles.push_back(j);
-	};
-
-	
+	};	
 };
 
 

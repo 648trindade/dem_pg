@@ -10,13 +10,11 @@
 struct InteractionForce
 {
 	virtual void add_force(std::shared_ptr<ParticleSet> paticle_set) {};
-	 
 };
 
 struct ContactForce : public InteractionForce
 {
-	inline static double stiffness = 1.0E0;
-
+	
 	void add_force(std::shared_ptr<ParticleSet> paticle_set) 
 	{
 		ContactPair* contact_pair_ptr = reinterpret_cast<ContactPair*>(paticle_set.get());
@@ -39,15 +37,18 @@ struct ContactForce : public InteractionForce
 			return;
 		
 		Vector direction = p1->position - p2->position;
-		Force force = direction*(stiffness*d/direction.norm());
+		Force force = direction*(stiffness/direction.norm());
 		
 		// action and reaction
-		p2->add_force(force);
-		p1->add_force(force*-1.0);
+		p2->add_force(force*-1.0);
+		p1->add_force(force);
 		  
 	};
+
+	static double stiffness;
 };
 
+double ContactForce::stiffness = 1.0E0;
 
 struct InteractionForceCollection
 {
