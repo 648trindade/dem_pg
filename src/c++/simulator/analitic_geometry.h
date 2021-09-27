@@ -13,11 +13,6 @@
 
 namespace geometric
 {
-	double distance(SphericParticle& p1, SphericParticle& p2)
-	{	
-		return distance(&p1, &p2);
-	} 
-	
 	double distance(SphericParticle* p1, SphericParticle* p2)
 	{	
 		Vector d = p1->position - p2->position;
@@ -32,10 +27,10 @@ namespace geometric
 		return v.dot(n) - p1->get_radius(); 
 	}
 	
-	double distance(Boundary* b1, SphericParticle* p1)
-	{    
-		return distance(p1, b1);
-	} 
+	// double distance(Boundary* b1, SphericParticle* p1)
+	// {    
+	// 	return distance(p1, b1);
+	// } 
 	
 	double distance(Point* p0, Point* p1)
 	{

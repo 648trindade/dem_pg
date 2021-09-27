@@ -19,35 +19,37 @@ set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} ${OpenMP_CXX_FLAGS}")
 
 add_library(
     dem_pg_omp
-    "src/c++/dgemm.h"
-    "src/c++/dgemm.cpp"
+        "src/c++/dgemm.h"
+        "src/c++/dgemm.cpp"
 )
 
-target_link_libraries(dem_pg_omp OpenMP::OpenMP_CXX)
-
-cuda_add_library(
-    dem_pg_cuda
-    "src/c++/dgemm.h"
-    "src/c++/dgemm.cu"
+target_link_libraries(
+    dem_pg_omp
+        OpenMP::OpenMP_CXX
 )
 
-set_property(TARGET dem_pg_cuda PROPERTY CUDA_ARCHITECTURES 63)
-set_property(TARGET dem_pg_cuda PROPERTY CXX_STANDARD 17)
+if (CUDA17)
+    cuda_add_library(
+        dem_pg_cuda
+            "src/c++/dgemm.h"
+            "src/c++/dgemm.cu"
+    )
 
-add_executable(
-    dem_pg
-    "src/c++/main.cpp"
-)
+    set_property(TARGET dem_pg_cuda PROPERTY CUDA_ARCHITECTURES 63)
+    set_property(TARGET dem_pg_cuda PROPERTY CXX_STANDARD 17)
 
-target_link_libraries(dem_pg dem_pg_omp)
-target_link_libraries(dem_pg dem_pg_cuda)
+    add_executable(
+        dem_pg
+        "src/c++/main.cpp"
+    )
 
-install(
-    TARGETS dem_pg
-    RUNTIME DESTINATION "bin"
-)
+    target_link_libraries(dem_pg dem_pg_omp)
+    target_link_libraries(dem_pg dem_pg_cuda)
 
-add_executable(
-    "test_dem_simulation"
-    "src/c++/test_dem_simulation.cpp"
-)
+    install(
+        TARGETS dem_pg
+        RUNTIME DESTINATION "bin"
+    )
+endif (CUDA17)
+
+add_subdirectory(src/c++)
