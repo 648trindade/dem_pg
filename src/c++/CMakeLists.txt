@@ -5,14 +5,21 @@ set(BASE_LIB_FILES
     simulator/analitic_geometry.hpp
     simulator/boundaries.cpp
     simulator/boundaries.hpp
+    simulator/contact.cpp
     simulator/contact.hpp
+    simulator/domain.cpp
     simulator/domain.hpp
+    simulator/geometry.cpp
     simulator/geometry.hpp
+    simulator/integrator.cpp
     simulator/integrator.hpp
+    simulator/interaction_forces.cpp
     simulator/interaction_forces.hpp
+    simulator/materials.cpp
     simulator/materials.hpp
     simulator/mechanics.hpp
     simulator/my_types.hpp
+    simulator/particle.cpp
     simulator/particle.hpp
 )
 

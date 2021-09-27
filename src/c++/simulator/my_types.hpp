@@ -5,17 +5,17 @@ enum class Entity
 	IParticle,
 	SphericParticle,
 	Boundary,
-	Wall,
+	Wall
 };
 
 enum class Set
 {
 	ContactPair,
-	ContactBoundary,
+	ContactBoundary
 };
 
 enum class Material
 {
 	IMaterial,
-	LinearMaterial,
+	LinearMaterial
 };

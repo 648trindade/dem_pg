@@ -227,7 +227,7 @@ void test_two_particles_collision()
 	}
  	
  	/* Simulate*/
- 	Integrator::integrate(domain, 0.001, 0.0, 0.02);
+ 	integrate(domain, 0.001, 0.0, 0.02);
 	std::cout << "End Collision" << std::endl;
 }
 
@@ -276,7 +276,7 @@ void test_particles_to_wall()
 	Domain domain {particles, assembler };
 
 	/* Simulate*/
- 	Integrator::integrate(domain, 0.001, 0.0, 0.02);
+ 	integrate(domain, 0.001, 0.0, 0.02);
 	std::cout << "End Wall Collision" << std::endl;
  	
 }
