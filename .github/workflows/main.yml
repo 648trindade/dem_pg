@@ -1,0 +1,26 @@
+name: DEM-PG
+
+on: 
+  push: 
+    branches: [master]
+
+  pull_request:
+
+jobs:
+  
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build
+      run: mkdir build && cd build
+      run: cmake -DCMAKE_CXX_COMPILER=clang++ ../
+      run: cmake --build .
+
+    - name: Test
+      run: cd build
+      run: ctest .
+
+    

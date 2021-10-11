@@ -56,3 +56,12 @@ target_link_libraries(
         test_main
         dem_base
 )
+
+add_test(
+    NAME Geometry
+    COMMAND $<TARGET_FILE:test_geometry>
+)
+add_test(
+    NAME Simulator
+    COMMAND $<TARGET_FILE:test_simulator>
+)

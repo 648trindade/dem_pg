@@ -12,14 +12,12 @@ public:
 	virtual Entity get_type() = 0;
 	virtual double get_radius() = 0;
 	
-	template<class T*>
-	void set_material(T* material)
+	void set_material(IMaterial* material)
 	{
 		this->material = material;
 	}
 	
-	template<class T*>
-	void set_geometry(T* g)
+	void set_geometry(IGeometry* g)
 	{
 		this->geometry = g;
 	}

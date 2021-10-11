@@ -13,8 +13,8 @@ public:
 	virtual Point get_point();
 	virtual Vector get_unitary_normal();
 	Entity get_type() override;
+	double get_radius() override;
 	virtual void print();
-	double get_radius();
 
 public:
 	Geometry* geometry; 
