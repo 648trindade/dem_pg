@@ -15,12 +15,14 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Build
-      run: mkdir build && cd build
-      run: cmake -DCMAKE_CXX_COMPILER=clang++ ../
-      run: cmake --build .
+      run: |
+        mkdir build && cd build
+        cmake -DCMAKE_CXX_COMPILER=clang++ ../
+        cmake --build .
 
     - name: Test
-      run: cd build
-      run: ctest .
+      run: |
+        cd build
+        ctest .
 
     
