@@ -7,29 +7,28 @@ set(CMAKE_CUDA_STANDARD 17)
 set(CMAKE_CUDA_STANDARD_REQUIRED ON)
 set(VERBOSE 1)
 
-project("DEM PlayGround" LANGUAGES CUDA CXX)
-#project("DEM PlayGround" LANGUAGES CXX)
+project("DEM PlayGround" LANGUAGES CXX)
 cmake_minimum_required(VERSION 3.8)
 
 set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR})
 
 find_package(OpenMP REQUIRED)
-find_package(CUDA REQUIRED)
-
-set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} ${OpenMP_CXX_FLAGS}")
+find_package(CUDA)
 
 add_library(
-   dem_pg_omp
-       "src/c++/dgemm.h"
-       "src/c++/dgemm.cpp"
-)
+    dem_pg_omp
+        "src/c++/dgemm.h"
+        "src/c++/dgemm.cpp"
+    )
 
 target_link_libraries(
    dem_pg_omp
        OpenMP::OpenMP_CXX
 )
 
-if (CUDA17)
+if (CUDA_FOUND)
+    enable_language(CUDA)
+    set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} ${OpenMP_CXX_FLAGS}")
     cuda_add_library(
         dem_pg_cuda
             "src/c++/dgemm.h"
@@ -51,7 +50,7 @@ if (CUDA17)
         TARGETS dem_pg
         RUNTIME DESTINATION "bin"
     )
-endif (CUDA17)
+endif (CUDA_FOUND)
 
 include(CTest)
 enable_testing()
