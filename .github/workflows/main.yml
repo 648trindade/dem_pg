@@ -1,0 +1,31 @@
+name: DEM-PG
+
+on: 
+  push: 
+    branches: [master]
+
+  pull_request:
+
+jobs:
+  
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - uses: Jimver/cuda-toolkit@v0.2.4
+      id: cuda-toolkit
+      with:
+        cuda: '11.2.2'
+
+    - name: Build
+      run: |
+        mkdir build && cd build
+        cmake -DCMAKE_CXX_COMPILER=clang++ ../
+        cmake --build .
+
+    - name: Test
+      run: |
+        cd build
+        ctest .
+  
