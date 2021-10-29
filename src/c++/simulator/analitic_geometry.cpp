@@ -5,7 +5,7 @@ namespace geometric
 	double distance(SphericParticle const& p1, SphericParticle const& p2)
 	{	
 		Vector d = p1.get_position() - p2.get_position();
-		// Important note: Negative distance means overla
+		// Important note: Negative distance means overlap
 		return d.norm() - p1.get_radius() - p2.get_radius();
 	}
 
