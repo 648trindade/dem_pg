@@ -53,3 +53,44 @@ TEST_CASE("Test Triangle")
 		check_point_inside_triangle(p, 0.5);
 	}
 }
+
+TEST_CASE("Test Distances")
+{
+    REQUIRE(distance(SphericParticle{
+        // Position:
+        1.0, 2.0, 3.0,
+        // Velocity:
+        0.0, 0.0, 0.0,
+        // Radius:
+        1.0
+        }, SphericParticle{
+        // Position:
+        2.0, 2.0, 3.0,
+        // Velocity:
+        0.0, 0.0, 0.0,
+        // Radius:
+        1.0
+    }) == -1.0);
+
+    REQUIRE(distance(SphericParticle{
+        // Position:
+        0.0, 3.0, 0.0,
+        // Velocity:
+        0.0, 0.0, 0.0,
+        // Radius:
+        0.5
+        }, Wall{
+        // Position:
+        0.0, 0.0, 0.0,
+        // Normal vector:
+        0.0, 1.0, 0.0,
+        }) == 2.5);
+
+    REQUIRE(distance(Point{0.0, 3.0, 0.0}, Point{0.0, 3.0, 0.0}) == 0.0);
+    REQUIRE(distance(Point{0.0, 4.0, 0.0}, Point{0.0, 3.0, 0.0}) == 1.0);
+    REQUIRE(distance(Point{0.0, 3.0, 0.0}, Point{0.0, 4.0, 0.0}) == 1.0);
+
+    REQUIRE(distance(Edge{{0.0, 0.0, 0.0}, {1.0, 0.0, 0.0}}, Point{0.0, 0.0, 0.0}) == 0.0);
+    REQUIRE(distance(Edge{{0.0, 0.0, 0.0}, {1.0, 0.0, 0.0}}, Point{1.0, 0.0, 0.0}) == 0.0);
+    REQUIRE(distance(Edge{{0.0, 0.0, 0.0}, {1.0, 0.0, 0.0}}, Point{-1.0, 0.0, 0.0}) == 1.0);
+}
