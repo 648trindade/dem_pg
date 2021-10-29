@@ -15,7 +15,7 @@ Point::Point(double x, double y, double z)
 {
 }
 
-Point Point::operator+(const Point& other)
+Point Point::operator+(const Point& other) const
 {
 	return Point(x + other.x, y + other.y, z + other.z);
 }
@@ -41,12 +41,12 @@ Point Point::operator-(const Point& other) const
 	return Point(x - other.x, y - other.y, z - other.z);
 }
 
-Point Point::operator*(const double& other)
+Point Point::operator*(const double& other) const
 {
 	return Point(x * other, y * other, z * other);
 }
 
-Point Point::operator/(const double& other)
+Point Point::operator/(const double& other) const
 {
 	return Point(x / other, y / other, z / other);
 }
@@ -63,7 +63,7 @@ Point& Point::operator=(const Point& other)
 	return *this;
 }
 
-double Point::norm()
+double Point::norm() const
 {
 	return std::sqrt((x)*(x) + (y)*(y) + (z)*(z));
 }
@@ -83,32 +83,32 @@ void Point::print() const
 	std::cout << "{ " << x << ", " << y << ", " << z << " }" <<std::endl;;
 }
 
-double Geometry::get_volume()
+double Geometry::get_volume() const
 {
 	return 0.0;
 }
 
-double Geometry::get_surface()
+double Geometry::get_surface() const
 {
 	return 0.0;
 }
 
-double Geometry::get_radius()
+double Geometry::get_radius() const
 {
 	return 0.0;
 }
 
-double PrimitiveGeometry::get_volume()
+double PrimitiveGeometry::get_volume() const
 {
 	return 0.0;
 }
 
-double PrimitiveGeometry::get_surface()
+double PrimitiveGeometry::get_surface() const
 {
 	return 0.0;
 }
 
-double PrimitiveGeometry::get_radius()
+double PrimitiveGeometry::get_radius() const
 {
 	return 0.0;
 }
@@ -119,17 +119,17 @@ InfinityPlane::InfinityPlane(double x, double y, double z, double nx, double ny,
 {
 }
 
-Vector InfinityPlane::get_unitary_normal()
+Vector InfinityPlane::get_unitary_normal() const
 {
 	return normal * (1.0 / normal.norm());
 }
 
-double InfinityPlane::get_volume()
+double InfinityPlane::get_volume() const
 {
 	return 0.0;
 }
 
-double InfinityPlane::get_surface()
+double InfinityPlane::get_surface() const
 {
 	return 0.0;
 }
@@ -146,17 +146,17 @@ Sphere::Sphere(double radius)
 {
 }
 
-double Sphere::get_volume()
+double Sphere::get_volume() const
 {
 	return get_surface() * radius / 3.0;
 }
 
-double Sphere::get_surface()
+double Sphere::get_surface() const
 {
 	return 4.0 * M_PI * radius * radius;
 }
 
-double Sphere::get_radius()
+double Sphere::get_radius() const
 {
 	return radius;
 }
@@ -178,28 +178,28 @@ Vector Edge::get_unitary_direction() const
 	return v / v.norm();
 }
 
-double Edge::get_volume()
+double Edge::get_volume() const
 {
 	return 0.0;
 }
 
-double Edge::get_surface()
+double Edge::get_surface() const
 {
 	return 0.0;
 }
 
-Vector PlanarGeometry::get_normal()
+Vector PlanarGeometry::get_normal() const
 {
 	return edges.at(0).get_vector().cross(edges.at(1).get_vector());
 }
 
-Vector PlanarGeometry::get_unitary_normal()
+Vector PlanarGeometry::get_unitary_normal() const
 {
 	Vector v = get_normal();
-	return v/v.norm();
+	return v / v.norm();
 }
 
-double PlanarGeometry::get_volume()
+double PlanarGeometry::get_volume() const
 {
 	return 0.0;
 }
@@ -217,7 +217,7 @@ Square::Square(Point p1, Point p2, Point p3, Point p4)
 	edges.push_back(Edge(p1, p2));
 }
 
-double Square::get_surface()
+double Square::get_surface() const
 {
 	return 0.0;
 }
@@ -233,7 +233,7 @@ Triangule::Triangule(Point p1, Point p2, Point p3)
 	this->edges.push_back(Edge(p3, p1));
 }
 
-double Triangule::get_surface()
+double Triangule::get_surface() const
 {	
 	Vector v1 = points.at(1) - points.at(0);
 	Vector v2 = points.at(2) - points.at(0);

@@ -25,7 +25,7 @@ TEST_CASE("Test Triangle")
 	
 	auto check_point_outside_triangle = [&](Point& p, double expected_distance) {
 		REQUIRE(!point_inside_triangle(&p, &t1));
-		REQUIRE(std::abs(distance(&t1, &p) - expected_distance) < 1e-8);
+		REQUIRE(std::abs(distance(t1, p) - expected_distance) < 1e-8);
 	};
 	{
 		Point p{3.0, 0.0, 0.0};
@@ -34,7 +34,7 @@ TEST_CASE("Test Triangle")
 
 	auto check_point_inside_triangle = [&](Point& p, double expected_distance) {
 		REQUIRE(point_inside_triangle(&p, &t1));
-		REQUIRE(std::abs(distance(&t1, &p) - expected_distance) < 1e-8);
+		REQUIRE(std::abs(distance(t1, p) - expected_distance) < 1e-8);
 	};
 	{
 		Point p{0.0, 0.9999, 0.0};

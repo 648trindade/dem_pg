@@ -5,6 +5,7 @@ namespace geometric
 	double distance(SphericParticle const& p1, SphericParticle const& p2)
 	{	
 		Vector d = p1.get_position() - p2.get_position();
+		// Important note: Negative distance means overla
 		return d.norm() - p1.get_radius() - p2.get_radius();
 	}
 
@@ -42,6 +43,14 @@ namespace geometric
 		}
 	}
 
+	double distance(Triangule const& t1, Point const& p1)
+	{
+	    double l1 = distance(t1.edges.at(0), p1);
+	    l1 = std::min(l1, distance(t1.edges.at(1), p1));
+	    l1 = std::min(l1, distance(t1.edges.at(2), p1));
+	    return l1;
+	}
+
 	double sign(Point* p1, Point* p2, Point* p3)
 	{
     	return (p1->x - p3->x) * (p2->y - p3->y) - (p2->x - p3->x) * (p1->y - p3->y);
@@ -66,26 +75,6 @@ namespace geometric
 
 	    return !(has_neg && has_pos);
 	}
-
-	double distance(Triangule* t1, Point* p1)
-	{
-		double l1 = distance(t1->edges.at(0), *p1);
-		l1 = std::min(l1, distance(t1->edges.at(1), *p1));
-		l1 = std::min(l1, distance(t1->edges.at(2), *p1));
-
-		return l1; 
-		/*
-		if (point_inside_triangle(p1, t1))
-		{
-			Vector v = *p1 - t1->points.at(0);
-			Vector n = t1->get_unitary_normal();    
-			return fmin(v.dot(n), l1);
-		}
-		else
-			return l1; 
-		*/
-	}
-		
 }
 
 namespace Polymorphic 

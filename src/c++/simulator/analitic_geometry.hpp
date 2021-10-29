@@ -17,12 +17,12 @@ namespace geometric
 	// double distance(Boundary* b1, SphericParticle* p1);
 	double distance(Point const& p0, Point const& p1);
 	double distance(Edge const& e1, Point const& p1);
+	double distance(Triangule const& t1, Point const& p1);
 
 	double sign(Point* p1, Point* p2, Point* p3);
 	double sign(Point& p1, Point& p2, Point& p3);
 
 	bool point_inside_triangle(Point* p1, Triangule* t1);
-	double distance(Triangule* t1, Point* p1);
 }
 
 namespace Polymorphic 
