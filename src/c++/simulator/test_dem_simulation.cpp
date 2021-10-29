@@ -86,7 +86,6 @@ TEST_CASE("Test Particle Distance")
 	int i = 0;
 	double r_array[] = {r1, r2};
 	for (auto const& p : particles) {
-		Position position = p->position;
 		double r = p->get_radius();
 
 		REQUIRE(r == r_array[i]);
@@ -114,8 +113,8 @@ TEST_CASE("Test Contact")
 		r2
 	);
 	auto pair1 = std::make_shared<ContactPair>(ContactPair{p1, p2});
-	ContactForce c{};
-	c.add_force(pair1);
+	auto contact_force = ContactForce{1.0};
+	contact_force.add_force(pair1);
 
 	REQUIRE((p1->position == Position{1.0, 0.0, 0.0}));
 	REQUIRE((p2->position == Position{1.0, 2.0, 0.0}));
@@ -156,12 +155,11 @@ TEST_CASE("Test Particle Collision")
 
 	/* Creating contacts collections */
 	auto contact_pair = std::make_shared<ContactPair>(p1, p2);
-	ParticleCollection collection;
+	auto collection = ParticleCollection{};
 	collection.add_contact_pair(contact_pair);
 
 	/* Setting interaction forces */
-	ContactForce::stiffness = 1.0E4;
-	auto contact_force = std::make_shared<ContactForce>();
+	auto contact_force = std::make_shared<ContactForce>(1e+4);
 	auto int_force_collection = InteractionForceCollection{};
 	int_force_collection.add_interaction_force(contact_force);
 
@@ -221,8 +219,11 @@ TEST_CASE("Test Particle to Wall Collision")
 {
 	/* Instantiating particles */
 	auto p1 = std::make_shared<SphericParticle>(
+        // Position [x, y, z]:
 		0.0, 1.1, 0.0,
+		// Velocity [x, y, z]:
 		0.0, -100.0, 0.0,
+		// Radius:
 		1.0
 	);
 
@@ -237,8 +238,7 @@ TEST_CASE("Test Particle to Wall Collision")
 	collection.add_contact_pair(pair);
 	
 	/* Setting intertaction forces */
-	ContactForce::stiffness = 1.0E5;
-	auto contact_force = std::make_shared<ContactForce>();
+	auto contact_force = std::make_shared<ContactForce>(1e+5);
 	InteractionForceCollection int_force_collection;
 	int_force_collection.add_interaction_force(contact_force);
 

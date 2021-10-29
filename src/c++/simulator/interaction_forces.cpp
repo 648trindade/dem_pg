@@ -1,6 +1,8 @@
 ﻿#include <simulator/interaction_forces.hpp>
 
-double ContactForce::stiffness = 1.0E0;
+ContactForce::ContactForce(double stiffness) : stiffness(stiffness)
+{
+}
 
 void InteractionForce::add_force(std::shared_ptr<ParticleSet> paticle_set)
 {
@@ -32,7 +34,7 @@ void ContactForce::add_force(std::shared_ptr<ContactPair> contact_set)
 	Force force = direction * (stiffness / direction.norm());
 	
 	// action and reaction
-	p2->add_force(force*-1.0);
+	p2->add_force(force * -1.0);
 	p1->add_force(force);
 };
 

@@ -15,11 +15,14 @@ struct InteractionForce
 struct ContactForce : public InteractionForce
 {
 public:
+    ContactForce(double stiffness);
+
 	void add_force(std::shared_ptr<ParticleSet> paticle_set);
 	void add_force(ContactPair* contact_set);
 	void add_force(std::shared_ptr<ContactPair> contact_set);
 
-	static double stiffness;
+private:
+	double stiffness = 1.0;
 };
 
 struct InteractionForceCollection
