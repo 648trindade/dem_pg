@@ -84,8 +84,8 @@ struct Edge : public PrimitiveGeometry
 {
 public:
 	Edge(Point p1, Point p2);
-	Vector get_vector();
-	Vector get_unitary_direction();
+	Vector get_vector() const;
+	Vector get_unitary_direction() const;
 	double get_volume() override;
 	double get_surface() override;
 

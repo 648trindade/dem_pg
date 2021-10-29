@@ -43,8 +43,8 @@ void Domain::set_time(double t)
 void Domain::assemble_particle_forces()
 {
 	for (auto particle_set : interaction_force_assembler->collection.particle_sets) {
-		for (auto contact_force : interaction_force_assembler->interaction_forces_collection.interaction_forces) {
-			contact_force->add_force(particle_set); 
+		for (auto interaction_force : interaction_force_assembler->interaction_forces_collection.interaction_forces) {
+		    interaction_force->add_force(particle_set);
 		}
 	}
 }

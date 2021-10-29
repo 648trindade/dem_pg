@@ -10,7 +10,7 @@ struct IParticle
 {
 public:	
 	virtual Entity get_type() = 0;
-	virtual double get_radius() = 0;
+	virtual double get_radius() const = 0;
 	
 	void set_material(IMaterial* material)
 	{
@@ -23,7 +23,8 @@ public:
 	}
 	
 	double get_density();
-	double get_mass();
+	Position get_position() const;
+	double get_mass() const;
 	void add_force(const Force& force);
 	void reset_force();
 	void move(double delta_t);
@@ -59,5 +60,5 @@ struct SphericParticle : public IParticle
 	);
 	~SphericParticle();
 	Entity get_type() override;
-	double get_radius() override;
+	double get_radius() const override;
 };

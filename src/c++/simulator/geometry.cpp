@@ -167,15 +167,15 @@ Edge::Edge(Point p1, Point p2)
 	points.push_back(p2);
 }
 
-Vector Edge::get_vector()
+Vector Edge::get_vector() const
 {
 	return points.at(1) - points.at(0);
 }
 
-Vector Edge::get_unitary_direction()
+Vector Edge::get_unitary_direction() const
 {
 	Vector v = get_vector();
-	return v/v.norm();
+	return v / v.norm();
 }
 
 double Edge::get_volume()

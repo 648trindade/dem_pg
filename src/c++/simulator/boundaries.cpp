@@ -1,12 +1,12 @@
 ﻿
 #include <simulator/boundaries.hpp>
 
-Point Boundary::get_point()
+Point Boundary::get_point() const
 {
 	return Point{0.0, 0.0, 0.0};
 }
 
-Vector Boundary::get_unitary_normal()
+Vector Boundary::get_unitary_normal() const
 {
 	return Vector{0.0, 0.0, 0.0};
 }
@@ -20,7 +20,7 @@ void Boundary::print()
 {
 }
 
-double Boundary::get_radius()
+double Boundary::get_radius() const
 {
 	return -1.0;
 }
@@ -41,12 +41,12 @@ void Wall::print()
 	geometry->normal.print();
 }
 
-Point Wall::get_point()
+Point Wall::get_point() const
 {
 	return geometry->point;
 }
 
-Vector Wall::get_unitary_normal()
+Vector Wall::get_unitary_normal() const
 {
 	return geometry->get_unitary_normal();
 }

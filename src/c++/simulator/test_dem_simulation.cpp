@@ -137,26 +137,32 @@ TEST_CASE("Test Particle Collision")
 {
 	/* Instantiating particles */
 	auto p1 = std::make_shared<SphericParticle>(
+        // Position [x, y, z]:
 		1.0, 0.0, 0.0,
+		// Velocity [x, y, z]:
 		10.0, 0.0, 0.0,
+		// Radius:
 		1.0
 	);
 	auto p2 = std::make_shared<SphericParticle>(
+        // Position [x, y, z]:
 		3.1, 0.0, 0.0,
+		// Velocity [x, y, z]:
 		-10.0, 0.0, 0.0,
+		// Radius:
 		1.0
 	);
 	auto particles = std::vector<std::shared_ptr<IParticle>>{{p1, p2}};
 
 	/* Creating contacts collections */
-	auto pair = std::make_shared<ContactPair>(p1, p2);
+	auto contact_pair = std::make_shared<ContactPair>(p1, p2);
 	ParticleCollection collection;
-	collection.add_contact_pair(pair);
+	collection.add_contact_pair(contact_pair);
 
 	/* Setting interaction forces */
 	ContactForce::stiffness = 1.0E4;
 	auto contact_force = std::make_shared<ContactForce>();
-	InteractionForceCollection int_force_collection;
+	auto int_force_collection = InteractionForceCollection{};
 	int_force_collection.add_interaction_force(contact_force);
 
  	/* Creating Simulation domain */
@@ -199,12 +205,15 @@ TEST_CASE("Test Particle Collision")
 TEST_CASE("Test Particle to Wall Distance")
 {
 	auto p1 = SphericParticle(
+        // Position [x, y, z]:
 		0.0, 1.0, 0.0,
+		// Velocity [x, y, z]:
 		10.0, 0.0, 0.0,
+		// Radius:
 		1.0
 	);
 	auto w1 = InfinityHorizontalWall(-5.);
-	double d = distance(&p1, &w1);
+	double d = distance(p1, w1);
 	REQUIRE(std::abs(d - 5.0) < TOLERANCE);
 }
 

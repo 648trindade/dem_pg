@@ -23,11 +23,6 @@ TEST_CASE("Test Triangle")
 	t1.points.at(1).print();
 	t1.points.at(2).print();
 	
-	double area = 1.0;
-	double s = t1.get_surface();
-	
-	Vector n = t1.get_unitary_normal();
-
 	auto check_point_outside_triangle = [&](Point& p, double expected_distance) {
 		REQUIRE(!point_inside_triangle(&p, &t1));
 		REQUIRE(std::abs(distance(&t1, &p) - expected_distance) < 1e-8);

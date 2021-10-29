@@ -10,10 +10,10 @@
 struct Boundary : public IParticle
 {
 public:
-	virtual Point get_point();
-	virtual Vector get_unitary_normal();
+	virtual Point get_point() const;
+	virtual Vector get_unitary_normal() const;
 	Entity get_type() override;
-	double get_radius() override;
+	double get_radius() const override;
 	virtual void print();
 
 public:
@@ -26,8 +26,8 @@ public:
 	Wall(double x, double y, double z, double nx, double ny, double nz );
 	Entity get_type() override;
 	void print() override;
-	Point get_point() override;
-	Vector get_unitary_normal() override;
+	Point get_point() const override;
+	Vector get_unitary_normal() const override;
 
 public:
 	InfinityPlane* geometry;

@@ -2,17 +2,17 @@
 
 namespace geometric
 {
-	double distance(SphericParticle* p1, SphericParticle* p2)
+	double distance(SphericParticle const& p1, SphericParticle const& p2)
 	{	
-		Vector d = p1->position - p2->position;
-		return d.norm() - p1->get_radius() - p2->get_radius();
+		Vector d = p1.get_position() - p2.get_position();
+		return d.norm() - p1.get_radius() - p2.get_radius();
 	}
 
-	double distance(SphericParticle* p1, Wall* b1)
+	double distance(SphericParticle const& p1, Wall const& b1)
 	{	
-		Vector v = p1->position - b1->get_point();
-		Vector n = b1->get_unitary_normal();    
-		return v.dot(n) - p1->get_radius(); 
+		Vector v = p1.get_position() - b1.get_point();
+		Vector n = b1.get_unitary_normal();
+		return v.dot(n) - p1.get_radius();
 	}
 
 	// double distance(Boundary* b1, SphericParticle* p1)
@@ -20,38 +20,26 @@ namespace geometric
 	// 	return distance(p1, b1);
 	// } 
 
-	double distance(Point* p0, Point* p1)
+	double distance(Point const& p0, Point const& p1)
 	{
-		Vector v = *p1 - *p0;
-		return v.norm();
+		return (p1 - p0).norm();
 	}
 
-	double distance(Point& p0, Point& p1)
-	{
-		return distance(&p0, &p1);
-	}
-
-	double distance(Edge* e1, Point* p1)
+	double distance(Edge const& e1, Point const& p1)
 	{    
-		Vector v = e1->get_vector();
-		Point p = e1->points.at(0);
-		Point* p0 = &p; 
-		Vector v1 = *p1 - p;
+		Vector v = e1.get_vector();
+		Point p0 = e1.points.at(0);
+		Vector v1 = p1 - p0;
 		double proj_length = v1.dot(v);
 
 		if (proj_length <= 0.0) {
 			return distance(p0, p1);
 		} else if (proj_length >= v.norm()) {
-			return distance(p1, &(e1->points.at(1)));
+			return distance(p1, e1.points.at(1));
 		} else {
-			Point p_closest = p + e1->get_unitary_direction()*proj_length;
-			return distance(p1, &p_closest);
+			Point p_closest = p0 + e1.get_unitary_direction() * proj_length;
+			return distance(p1, p_closest);
 		}
-	}
-
-	double distance(Edge& e1, Point& p1)
-	{
-		return distance(&e1, &p1);
 	}
 
 	double sign(Point* p1, Point* p2, Point* p3)
@@ -110,15 +98,15 @@ namespace Polymorphic
 		#define IS_WALL(p) p->get_type() == Entity::Wall
 
 		if (IS_SPHERIC(p1) && IS_SPHERIC(p2)) {
-			return geometric::distance(reinterpret_cast<SphericParticle*>(p1), reinterpret_cast<SphericParticle*>(p2));
+			return geometric::distance(*reinterpret_cast<SphericParticle*>(p1), *reinterpret_cast<SphericParticle*>(p2));
 		}
 
 		if (IS_SPHERIC(p1) && IS_WALL(p2)) {
-			return geometric::distance(reinterpret_cast<SphericParticle*>(p1), reinterpret_cast<Wall*>(p2));
+			return geometric::distance(*reinterpret_cast<SphericParticle*>(p1), *reinterpret_cast<Wall*>(p2));
 		}
 
 		if (IS_WALL(p1) && IS_SPHERIC(p2)) {
-			return geometric::distance(reinterpret_cast<SphericParticle*>(p2), reinterpret_cast<Wall*>(p1));
+			return geometric::distance(*reinterpret_cast<SphericParticle*>(p2), *reinterpret_cast<Wall*>(p1));
 		}
 
 		return 0.0;

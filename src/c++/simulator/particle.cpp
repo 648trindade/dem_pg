@@ -5,12 +5,17 @@ double IParticle::get_density()
 	return material->get_density();	
 }
 
-double IParticle::get_mass()
+Position IParticle::get_position() const
 {
-	return geometry->get_volume()*material->get_density();	
+	return this->position;
 }
 
-void IParticle::add_force(const Force& force )
+double IParticle::get_mass() const
+{
+	return this->geometry->get_volume() * this->material->get_density();
+}
+
+void IParticle::add_force(const Force& force)
 {
 	this->force += force;
 }
@@ -85,7 +90,7 @@ Entity SphericParticle::get_type()
 	return Entity::SphericParticle;
 }
 
-double SphericParticle::get_radius()
+double SphericParticle::get_radius() const
 {
 	return this->geometry->get_radius();
 }
