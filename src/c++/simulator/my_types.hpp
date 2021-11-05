@@ -1,21 +1,7 @@
 ﻿#pragma once
 
-enum class Entity
-{
-	IParticle,
-	SphericParticle,
-	Boundary,
-	Wall
-};
+enum class Entity { IParticle, SphericParticle, Boundary, Wall };
 
-enum class Set
-{
-	ContactPair,
-	ContactBoundary
-};
+enum class Set { ContactPair, ContactBoundary };
 
-enum class Material
-{
-	IMaterial,
-	LinearMaterial
-};
+enum class Material { IMaterial, LinearMaterial };
