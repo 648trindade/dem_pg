@@ -2,19 +2,19 @@
 
 ContactForce::ContactForce(double stiffness) : stiffness(stiffness) {}
 
-void InteractionForce::add_force(std::shared_ptr<ParticleSet> paticle_set) {}
+void InteractionForce::add_force(std::shared_ptr<Contact> paticle_set) {}
 
-void ContactForce::add_force(std::shared_ptr<ParticleSet> paticle_set) {
-  ContactPair *contact_pair_ptr =
-      reinterpret_cast<ContactPair *>(paticle_set.get());
+void ContactForce::add_force(std::shared_ptr<Contact> paticle_set) {
+  ParticleContact *contact_pair_ptr =
+      reinterpret_cast<ParticleContact *>(paticle_set.get());
   add_force(contact_pair_ptr);
 }
 
-void ContactForce::add_force(ContactPair *contact_set) {
-  add_force(std::make_shared<ContactPair>(*contact_set));
+void ContactForce::add_force(ParticleContact *contact_set) {
+  add_force(std::make_shared<ParticleContact>(*contact_set));
 }
 
-void ContactForce::add_force(std::shared_ptr<ContactPair> contact_set) {
+void ContactForce::add_force(std::shared_ptr<ParticleContact> contact_set) {
 
   auto &p1 = contact_set->particles.at(0);
   auto &p2 = contact_set->particles.at(1);
@@ -55,7 +55,7 @@ void InteractionForceCollection::add_interaction_force(
 InteractionForceAssembler::InteractionForceAssembler() {}
 
 InteractionForceAssembler::InteractionForceAssembler(
-    ParticleCollection &collection,
-    InteractionForceCollection &interaction_forces_collection)
+        ContactCollection &collection,
+        InteractionForceCollection &interaction_forces_collection)
     : collection(collection),
       interaction_forces_collection(interaction_forces_collection) {}

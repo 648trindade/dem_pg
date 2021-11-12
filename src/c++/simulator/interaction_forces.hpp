@@ -8,16 +8,16 @@
 #include <memory>
 
 struct InteractionForce {
-  virtual void add_force(std::shared_ptr<ParticleSet> paticle_set);
+  virtual void add_force(std::shared_ptr<Contact> paticle_set);
 };
 
 struct ContactForce : public InteractionForce {
 public:
   ContactForce(double stiffness);
 
-  void add_force(std::shared_ptr<ParticleSet> paticle_set);
-  void add_force(ContactPair *contact_set);
-  void add_force(std::shared_ptr<ContactPair> contact_set);
+  void add_force(std::shared_ptr<Contact> paticle_set);
+  void add_force(ParticleContact *contact_set);
+  void add_force(std::shared_ptr<ParticleContact> contact_set);
 
 private:
   double stiffness = 1.0;
@@ -39,10 +39,10 @@ struct InteractionForceAssembler {
 public:
   InteractionForceAssembler();
   InteractionForceAssembler(
-      ParticleCollection &collection,
-      InteractionForceCollection &interaction_forces_collection);
+          ContactCollection &collection,
+          InteractionForceCollection &interaction_forces_collection);
 
 public:
-  ParticleCollection collection;
+  ContactCollection collection;
   InteractionForceCollection interaction_forces_collection;
 };

@@ -11,7 +11,7 @@
 struct Domain {
 public:
   Domain();
-  Domain(std::vector<std::shared_ptr<IParticle>> particles,
+  Domain(std::vector<std::shared_ptr<IParticle>> const& particles,
          InteractionForceAssembler &interaction_force_assembler);
   Domain(InteractionForceAssembler &interaction_force_assembler);
 

@@ -98,7 +98,7 @@ TEST_CASE("Test Contact") {
   double r2 = 1.0;
   auto p1 = std::make_shared<SphericParticle>(1.0, 0.0, 0.0, 0.0, 0.0, 0.0, r1);
   auto p2 = std::make_shared<SphericParticle>(1.0, 2.0, 0.0, 0.0, 0.0, 0.0, r2);
-  auto pair1 = std::make_shared<ContactPair>(ContactPair{p1, p2});
+  auto pair1 = std::make_shared<ParticleContact>(ParticleContact{p1, p2});
   auto contact_force = ContactForce{1.0};
   contact_force.add_force(pair1);
 
@@ -137,8 +137,8 @@ TEST_CASE("Test Particle Collision") {
   auto particles = std::vector<std::shared_ptr<IParticle>>{{p1, p2}};
 
   /* Creating contacts collections */
-  auto contact_pair = std::make_shared<ContactPair>(p1, p2);
-  auto collection = ParticleCollection{};
+  auto contact_pair = std::make_shared<ParticleContact>(p1, p2);
+  auto collection = ContactCollection{};
   collection.add_contact_pair(contact_pair);
 
   /* Setting interaction forces */
@@ -212,9 +212,9 @@ TEST_CASE("Test Particle to Wall Collision") {
 
   /* Creating contacts collections */
   auto w1 = std::make_shared<InfinityHorizontalWall>(0.0);
-  auto pair = std::make_shared<ContactBoundary>(p1, w1);
+  auto pair = std::make_shared<BoundaryContact>(p1, w1);
 
-  ParticleCollection collection;
+  ContactCollection collection;
   collection.add_contact_pair(pair);
 
   /* Setting intertaction forces */
