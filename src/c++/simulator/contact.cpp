@@ -16,6 +16,10 @@ ParticleContact::ParticleContact(std::shared_ptr<SphericParticle> i,
   particles.push_back(j);
 }
 
+std::shared_ptr<IParticle> ParticleContact::get_particle(int i) const {
+  return this->particles.at(i);
+}
+
 BoundaryContact::BoundaryContact(SphericParticle *p, Boundary *b) {
   particles.push_back(std::make_shared<SphericParticle>(*p));
   particles.push_back(std::make_shared<Boundary>(*b));
@@ -25,6 +29,12 @@ BoundaryContact::BoundaryContact(std::shared_ptr<SphericParticle> p,
                                  std::shared_ptr<Boundary> b) {
   particles.push_back(p);
   particles.push_back(b);
+}
+
+std::shared_ptr<IParticle> BoundaryContact::get_particle(int i) const
+{
+    // TODO: Verify if this makes sense and overhaul architecture for particles from contacts
+    return this->particles.at(i);
 }
 
 void ContactCollection::add_contact_pair(std::shared_ptr<ParticleContact> const& pair) {

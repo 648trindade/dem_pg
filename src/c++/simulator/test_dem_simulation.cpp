@@ -99,7 +99,7 @@ TEST_CASE("Test Contact") {
   auto p1 = std::make_shared<SphericParticle>(1.0, 0.0, 0.0, 0.0, 0.0, 0.0, r1);
   auto p2 = std::make_shared<SphericParticle>(1.0, 2.0, 0.0, 0.0, 0.0, 0.0, r2);
   auto pair1 = std::make_shared<ParticleContact>(ParticleContact{p1, p2});
-  auto contact_force = ContactForce{1.0};
+  auto contact_force = ContactForceCalculator{1.0};
   contact_force.add_force(pair1);
 
   REQUIRE((p1->position == Position{1.0, 0.0, 0.0}));
@@ -142,7 +142,7 @@ contact_collection.add_contact_pair(std::make_shared<ParticleContact>(p1, p2));
 
   /* Setting interaction forces */
   auto force_collection = InteractionForceCollection{};
-  force_collection.add_interaction_force(std::make_shared<ContactForce>(1e+4));
+  force_collection.add_interaction_force(std::make_shared<ContactForceCalculator>(1e+4));
 
   /* Creating Simulation domain */
   InteractionForceAssembler assembler(contact_collection, force_collection);
@@ -216,7 +216,7 @@ TEST_CASE("Test Particle to Wall Collision") {
   collection.add_contact_pair(pair);
 
   /* Setting intertaction forces */
-  auto contact_force = std::make_shared<ContactForce>(1e+5);
+  auto contact_force = std::make_shared<ContactForceCalculator>(1e+5);
   InteractionForceCollection int_force_collection;
   int_force_collection.add_interaction_force(contact_force);
 

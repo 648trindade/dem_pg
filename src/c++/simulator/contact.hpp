@@ -6,7 +6,9 @@
 #include <memory>
 #include <vector>
 
-struct Contact {};
+struct Contact {
+    virtual std::shared_ptr<IParticle> get_particle(int i) const = 0;
+};
 
 struct ParticleContact : public Contact {
 public:
@@ -14,6 +16,8 @@ public:
   ParticleContact(SphericParticle *i, SphericParticle *j);
   ParticleContact(std::shared_ptr<SphericParticle> i,
                   std::shared_ptr<SphericParticle> j);
+
+  std::shared_ptr<IParticle> get_particle(int i) const;
 
 public:
   std::vector<std::shared_ptr<IParticle>> particles;
@@ -24,6 +28,8 @@ public:
   BoundaryContact(SphericParticle *p, Boundary *b);
   BoundaryContact(std::shared_ptr<SphericParticle> p,
                   std::shared_ptr<Boundary> b);
+
+  std::shared_ptr<IParticle> get_particle(int i) const override;
 
 public:
   std::vector<std::shared_ptr<IParticle>> particles;
