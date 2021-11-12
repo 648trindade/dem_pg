@@ -2,7 +2,7 @@
 
 Domain::Domain() {}
 
-Domain::Domain(std::vector<std::shared_ptr<IParticle>> const& particles,
+Domain::Domain(std::vector<std::shared_ptr<Entity>> const& particles,
                InteractionForceAssembler &interaction_force_assembler)
     : particles(particles),
       interaction_force_assembler(&interaction_force_assembler) {}

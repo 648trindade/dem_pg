@@ -21,7 +21,7 @@ using namespace geometric;
 TEST_CASE("Test Entities Types") {
   SphericParticle p1{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.1};
 
-  REQUIRE(p1.get_type() == Entity::SphericParticle);
+  REQUIRE(p1.get_type() == EntityType::SphericParticle);
 }
 
 TEST_CASE("Test Copy Position") {
@@ -74,7 +74,7 @@ TEST_CASE("Test Particle Distance") {
   SphericParticle p1(1.0, 0.0, 0.0, 0.0, 0.0, 0.0, r1);
   SphericParticle p2(1.0, 2.0, 0.0, 0.0, 0.0, 0.0, r2);
 
-  std::vector<IParticle *> particles;
+  std::vector<Entity *> particles;
   particles.push_back(&p1);
   particles.push_back(&p2);
 
@@ -84,7 +84,7 @@ TEST_CASE("Test Particle Distance") {
     double r = p->get_radius();
 
     REQUIRE(r == r_array[i]);
-    REQUIRE(p->get_type() == Entity::SphericParticle);
+    REQUIRE(p->get_type() == EntityType::SphericParticle);
 
     i++;
   }
@@ -134,7 +134,7 @@ TEST_CASE("Test Particle Collision") {
       -10.0, 0.0, 0.0,
       // Radius:
       1.0);
-  auto particles = std::vector<std::shared_ptr<IParticle>>{{p1, p2}};
+  auto particles = std::vector<std::shared_ptr<Entity>>{{p1, p2}};
 
   /* Creating contacts collections */
   auto contact_collection = ContactCollection{};
@@ -152,7 +152,7 @@ contact_collection.add_contact_pair(std::make_shared<ParticleContact>(p1, p2));
   double final_time = 0.0;
   integrate(domain, 0.001, 0.0, 0.02,
             [&](double time,
-                std::vector<std::shared_ptr<IParticle>> const &particles) {
+                std::vector<std::shared_ptr<Entity>> const &particles) {
               if (std::abs(time - 0.001) < 1e-8) {
                 REQUIRE(std::abs(p1->position.x - 1.01) < TOLERANCE);
                 REQUIRE(std::abs(p2->position.x - 3.09) < TOLERANCE);
@@ -205,7 +205,7 @@ TEST_CASE("Test Particle to Wall Collision") {
       // Radius:
       1.0);
 
-  std::vector<std::shared_ptr<IParticle>> particles;
+  std::vector<std::shared_ptr<Entity>> particles;
   particles.push_back(p1);
 
   /* Creating contacts collections */
@@ -228,7 +228,7 @@ TEST_CASE("Test Particle to Wall Collision") {
   double final_time = 0.0;
   integrate(
       domain, 0.001, 0.0, 0.02,
-      [&](double time, std::vector<std::shared_ptr<IParticle>> particles) {
+      [&](double time, std::vector<std::shared_ptr<Entity>> particles) {
         if (std::abs(time - 0.001) < 1e-8) {
           REQUIRE(std::abs(p1->position.y - 1.0) < TOLERANCE);
         }
