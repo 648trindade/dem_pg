@@ -137,17 +137,15 @@ TEST_CASE("Test Particle Collision") {
   auto particles = std::vector<std::shared_ptr<IParticle>>{{p1, p2}};
 
   /* Creating contacts collections */
-  auto contact_pair = std::make_shared<ParticleContact>(p1, p2);
-  auto collection = ContactCollection{};
-  collection.add_contact_pair(contact_pair);
+  auto contact_collection = ContactCollection{};
+contact_collection.add_contact_pair(std::make_shared<ParticleContact>(p1, p2));
 
   /* Setting interaction forces */
-  auto contact_force = std::make_shared<ContactForce>(1e+4);
-  auto int_force_collection = InteractionForceCollection{};
-  int_force_collection.add_interaction_force(contact_force);
+  auto force_collection = InteractionForceCollection{};
+  force_collection.add_interaction_force(std::make_shared<ContactForce>(1e+4));
 
   /* Creating Simulation domain */
-  InteractionForceAssembler assembler(collection, int_force_collection);
+  InteractionForceAssembler assembler(contact_collection, force_collection);
   Domain domain{particles, assembler};
 
   /* Simulate */

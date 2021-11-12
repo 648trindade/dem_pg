@@ -5,6 +5,17 @@
 
 using namespace geometric;
 
+TEST_CASE("Test Point") {
+    Point p1{1.0, 2.0, 3.0};
+    REQUIRE(p1.x > 0.0);
+    REQUIRE(p1.y > 0.0);
+    REQUIRE(p1.z > 0.0);
+    p1 = -p1;
+    REQUIRE(p1.x < 0.0);
+    REQUIRE(p1.y < 0.0);
+    REQUIRE(p1.z < 0.0);
+}
+
 TEST_CASE("Test Triangle") {
   Point p1{0.0, 0.0, 0.0};
   Point p2{2.0, 0.0, 0.0};

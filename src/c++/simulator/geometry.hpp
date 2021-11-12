@@ -16,17 +16,21 @@ public:
   Point &operator+=(const Point &other);
   Point &operator-=(const Point &other);
   Point operator-(const Point &other) const;
+  Point operator-() const;
   Point operator*(const double &other) const;
   Point operator/(const double &other) const;
   bool operator==(const Point &other);
   Point &operator=(const Point &other);
+
   double norm() const;
   double dot(const Point &other) const;
   Point cross(const Point &other) const;
   void print() const;
 
 public:
-  double x, y, z;
+  double x;
+  double y;
+  double z;
 };
 
 using Vector = Point;

@@ -28,7 +28,7 @@ void ContactForce::add_force(std::shared_ptr<ParticleContact> contact_set) {
   Force force = direction * (stiffness / direction.norm());
 
   // action and reaction
-  p2->add_force(force * -1.0);
+  p2->add_force(-force);
   p1->add_force(force);
 };
 

@@ -39,8 +39,8 @@ struct InteractionForceAssembler {
 public:
   InteractionForceAssembler();
   InteractionForceAssembler(
-          ContactCollection &collection,
-          InteractionForceCollection &interaction_forces_collection);
+      ContactCollection &collection,
+      InteractionForceCollection &interaction_forces_collection);
 
 public:
   ContactCollection collection;
