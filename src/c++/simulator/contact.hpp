@@ -31,8 +31,8 @@ public:
 
 struct ContactCollection {
 public:
-  void add_contact_pair(std::shared_ptr<ParticleContact> const& pair);
-  void add_contact_pair(std::shared_ptr<BoundaryContact> const& pair);
+  void add_contact_pair(std::shared_ptr<ParticleContact> const &pair);
+  void add_contact_pair(std::shared_ptr<BoundaryContact> const &pair);
 
 public:
   std::vector<std::shared_ptr<Contact>> particle_sets;
