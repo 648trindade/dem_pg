@@ -6,36 +6,40 @@
 #include <memory>
 #include <vector>
 
-struct ParticleSet {};
-
-struct ContactPair : public ParticleSet {
-public:
-  ContactPair(SphericParticle &i, SphericParticle &j);
-  ContactPair(SphericParticle *i, SphericParticle *j);
-  ContactPair(std::shared_ptr<SphericParticle> i,
-              std::shared_ptr<SphericParticle> j);
-
-public:
-  std::vector<std::shared_ptr<IParticle>> particles;
+struct Contact {
+    virtual std::shared_ptr<Entity> get_particle(int i) const = 0;
 };
 
-struct ContactBoundary : public ParticleSet {
+struct ParticleContact : public Contact {
 public:
-  ContactBoundary(SphericParticle *p, Boundary *b);
-  ContactBoundary(std::shared_ptr<SphericParticle> p,
+  ParticleContact(SphericParticle &i, SphericParticle &j);
+  ParticleContact(SphericParticle *i, SphericParticle *j);
+  ParticleContact(std::shared_ptr<SphericParticle> i,
+                  std::shared_ptr<SphericParticle> j);
+
+  std::shared_ptr<Entity> get_particle(int i) const;
+
+public:
+  std::vector<std::shared_ptr<Entity>> particles;
+};
+
+struct BoundaryContact : public Contact {
+public:
+  BoundaryContact(SphericParticle *p, Boundary *b);
+  BoundaryContact(std::shared_ptr<SphericParticle> p,
                   std::shared_ptr<Boundary> b);
 
+  std::shared_ptr<Entity> get_particle(int i) const override;
+
 public:
-  std::vector<std::shared_ptr<IParticle>> particles;
+  std::vector<std::shared_ptr<Entity>> particles;
 };
 
-struct ParticleCollection {
+struct ContactCollection {
 public:
-  void add_contact_pair(ContactPair *pair);
-  void add_contact_pair(std::shared_ptr<ContactPair> pair);
-  void add_contact_pair(ContactBoundary *pair);
-  void add_contact_pair(std::shared_ptr<ContactBoundary> pair);
+  void add_contact_pair(std::shared_ptr<ParticleContact> const &pair);
+  void add_contact_pair(std::shared_ptr<BoundaryContact> const &pair);
 
 public:
-  std::vector<std::shared_ptr<ParticleSet>> particle_sets;
+  std::vector<std::shared_ptr<Contact>> particle_sets;
 };

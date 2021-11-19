@@ -6,9 +6,9 @@
 #include <simulator/mechanics.hpp>
 #include <simulator/my_types.hpp>
 
-struct IParticle {
+class Entity {
 public:
-  virtual Entity get_type() = 0;
+  virtual EntityType get_type() = 0;
   virtual double get_radius() const = 0;
 
   void set_material(IMaterial *material) { this->material = material; }
@@ -33,11 +33,11 @@ public:
   IGeometry *geometry;
 };
 
-struct SphericParticle : public IParticle {
+struct SphericParticle : public Entity {
   SphericParticle(double x, double y, double z, double vx, double vy, double vz,
                   double r, double rho = 1.0);
   SphericParticle(Position p, Velocity v, double r, LinearMaterial *m);
   ~SphericParticle();
-  Entity get_type() override;
+  EntityType get_type() override;
   double get_radius() const override;
 };

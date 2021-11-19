@@ -25,5 +25,5 @@ bool point_inside_triangle(Point *p1, Triangule *t1);
 } // namespace geometric
 
 namespace Polymorphic {
-double distance(IParticle *p1, IParticle *p2);
+double distance(Entity *p1, Entity *p2);
 }

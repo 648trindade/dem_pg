@@ -5,7 +5,7 @@ Point Boundary::get_point() const { return Point{0.0, 0.0, 0.0}; }
 
 Vector Boundary::get_unitary_normal() const { return Vector{0.0, 0.0, 0.0}; }
 
-Entity Boundary::get_type() { return Entity::Boundary; }
+EntityType Boundary::get_type() { return EntityType::Boundary; }
 
 void Boundary::print() {}
 
@@ -14,7 +14,7 @@ double Boundary::get_radius() const { return -1.0; }
 Wall::Wall(double x, double y, double z, double nx, double ny, double nz)
     : geometry(new InfinityPlane(x, y, z, nx, ny, nz)) {}
 
-Entity Wall::get_type() { return Entity::Wall; }
+EntityType Wall::get_type() { return EntityType::Wall; }
 
 void Wall::print() {
   geometry->point.print();

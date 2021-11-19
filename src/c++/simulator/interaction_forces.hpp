@@ -7,17 +7,16 @@
 #include <iostream>
 #include <memory>
 
-struct InteractionForce {
-  virtual void add_force(std::shared_ptr<ParticleSet> paticle_set);
+class InteractionForceCalculator {
+public:
+  virtual void add_force(std::shared_ptr<Contact> particle_set) = 0;
 };
 
-struct ContactForce : public InteractionForce {
+struct ContactForceCalculator : public InteractionForceCalculator {
 public:
-  ContactForce(double stiffness);
+  ContactForceCalculator(double stiffness);
 
-  void add_force(std::shared_ptr<ParticleSet> paticle_set);
-  void add_force(ContactPair *contact_set);
-  void add_force(std::shared_ptr<ContactPair> contact_set);
+  void add_force(std::shared_ptr<Contact> particle_set) override;
 
 private:
   double stiffness = 1.0;
@@ -25,24 +24,20 @@ private:
 
 struct InteractionForceCollection {
 public:
-  void add_interaction_force(InteractionForce *interaction_force);
-  void
-  add_interaction_force(std::shared_ptr<InteractionForce> interaction_force);
-  void add_interaction_force(ContactForce *interaction_force);
-  void add_interaction_force(std::shared_ptr<ContactForce> interaction_force);
+  void add_interaction_force(std::shared_ptr<ContactForceCalculator> interaction_force);
 
 public:
-  std::vector<std::shared_ptr<InteractionForce>> interaction_forces;
+  std::vector<std::shared_ptr<InteractionForceCalculator>> interaction_forces;
 };
 
 struct InteractionForceAssembler {
 public:
   InteractionForceAssembler();
   InteractionForceAssembler(
-      ParticleCollection &collection,
+      ContactCollection &collection,
       InteractionForceCollection &interaction_forces_collection);
 
 public:
-  ParticleCollection collection;
+  ContactCollection collection;
   InteractionForceCollection interaction_forces_collection;
 };

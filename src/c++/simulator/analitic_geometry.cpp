@@ -65,11 +65,11 @@ bool point_inside_triangle(Point *p1, Triangule *t1) {
 } // namespace geometric
 
 namespace Polymorphic {
-double distance(IParticle *p1, IParticle *p2) {
-#define IS_SPHERIC(p) p->get_type() == Entity::SphericParticle
+double distance(Entity *p1, Entity *p2) {
+#define IS_SPHERIC(p) p->get_type() == EntityType::SphericParticle
 #define IS_IPARTICLE(p) p->get_type() == Entity::SphericParticle
 #define IS_BOUNDARY(p) p->get_type() == Entity::Boundary
-#define IS_WALL(p) p->get_type() == Entity::Wall
+#define IS_WALL(p) p->get_type() == EntityType::Wall
 
   if (IS_SPHERIC(p1) && IS_SPHERIC(p2)) {
     return geometric::distance(*reinterpret_cast<SphericParticle *>(p1),

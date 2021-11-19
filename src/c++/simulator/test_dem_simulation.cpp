@@ -21,7 +21,7 @@ using namespace geometric;
 TEST_CASE("Test Entities Types") {
   SphericParticle p1{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.1};
 
-  REQUIRE(p1.get_type() == Entity::SphericParticle);
+  REQUIRE(p1.get_type() == EntityType::SphericParticle);
 }
 
 TEST_CASE("Test Copy Position") {
@@ -74,7 +74,7 @@ TEST_CASE("Test Particle Distance") {
   SphericParticle p1(1.0, 0.0, 0.0, 0.0, 0.0, 0.0, r1);
   SphericParticle p2(1.0, 2.0, 0.0, 0.0, 0.0, 0.0, r2);
 
-  std::vector<IParticle *> particles;
+  std::vector<Entity *> particles;
   particles.push_back(&p1);
   particles.push_back(&p2);
 
@@ -84,7 +84,7 @@ TEST_CASE("Test Particle Distance") {
     double r = p->get_radius();
 
     REQUIRE(r == r_array[i]);
-    REQUIRE(p->get_type() == Entity::SphericParticle);
+    REQUIRE(p->get_type() == EntityType::SphericParticle);
 
     i++;
   }
@@ -98,8 +98,8 @@ TEST_CASE("Test Contact") {
   double r2 = 1.0;
   auto p1 = std::make_shared<SphericParticle>(1.0, 0.0, 0.0, 0.0, 0.0, 0.0, r1);
   auto p2 = std::make_shared<SphericParticle>(1.0, 2.0, 0.0, 0.0, 0.0, 0.0, r2);
-  auto pair1 = std::make_shared<ContactPair>(ContactPair{p1, p2});
-  auto contact_force = ContactForce{1.0};
+  auto pair1 = std::make_shared<ParticleContact>(ParticleContact{p1, p2});
+  auto contact_force = ContactForceCalculator{1.0};
   contact_force.add_force(pair1);
 
   REQUIRE((p1->position == Position{1.0, 0.0, 0.0}));
@@ -134,27 +134,25 @@ TEST_CASE("Test Particle Collision") {
       -10.0, 0.0, 0.0,
       // Radius:
       1.0);
-  auto particles = std::vector<std::shared_ptr<IParticle>>{{p1, p2}};
+  auto particles = std::vector<std::shared_ptr<Entity>>{{p1, p2}};
 
   /* Creating contacts collections */
-  auto contact_pair = std::make_shared<ContactPair>(p1, p2);
-  auto collection = ParticleCollection{};
-  collection.add_contact_pair(contact_pair);
+  auto contact_collection = ContactCollection{};
+contact_collection.add_contact_pair(std::make_shared<ParticleContact>(p1, p2));
 
   /* Setting interaction forces */
-  auto contact_force = std::make_shared<ContactForce>(1e+4);
-  auto int_force_collection = InteractionForceCollection{};
-  int_force_collection.add_interaction_force(contact_force);
+  auto force_collection = InteractionForceCollection{};
+  force_collection.add_interaction_force(std::make_shared<ContactForceCalculator>(1e+4));
 
   /* Creating Simulation domain */
-  InteractionForceAssembler assembler(collection, int_force_collection);
+  InteractionForceAssembler assembler(contact_collection, force_collection);
   Domain domain{particles, assembler};
 
   /* Simulate */
   double final_time = 0.0;
   integrate(domain, 0.001, 0.0, 0.02,
             [&](double time,
-                std::vector<std::shared_ptr<IParticle>> const &particles) {
+                std::vector<std::shared_ptr<Entity>> const &particles) {
               if (std::abs(time - 0.001) < 1e-8) {
                 REQUIRE(std::abs(p1->position.x - 1.01) < TOLERANCE);
                 REQUIRE(std::abs(p2->position.x - 3.09) < TOLERANCE);
@@ -207,18 +205,18 @@ TEST_CASE("Test Particle to Wall Collision") {
       // Radius:
       1.0);
 
-  std::vector<std::shared_ptr<IParticle>> particles;
+  std::vector<std::shared_ptr<Entity>> particles;
   particles.push_back(p1);
 
   /* Creating contacts collections */
   auto w1 = std::make_shared<InfinityHorizontalWall>(0.0);
-  auto pair = std::make_shared<ContactBoundary>(p1, w1);
+  auto pair = std::make_shared<BoundaryContact>(p1, w1);
 
-  ParticleCollection collection;
+  ContactCollection collection;
   collection.add_contact_pair(pair);
 
   /* Setting intertaction forces */
-  auto contact_force = std::make_shared<ContactForce>(1e+5);
+  auto contact_force = std::make_shared<ContactForceCalculator>(1e+5);
   InteractionForceCollection int_force_collection;
   int_force_collection.add_interaction_force(contact_force);
 
@@ -230,7 +228,7 @@ TEST_CASE("Test Particle to Wall Collision") {
   double final_time = 0.0;
   integrate(
       domain, 0.001, 0.0, 0.02,
-      [&](double time, std::vector<std::shared_ptr<IParticle>> particles) {
+      [&](double time, std::vector<std::shared_ptr<Entity>> particles) {
         if (std::abs(time - 0.001) < 1e-8) {
           REQUIRE(std::abs(p1->position.y - 1.0) < TOLERANCE);
         }
