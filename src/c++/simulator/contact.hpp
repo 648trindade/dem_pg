@@ -14,8 +14,8 @@ struct ParticleContact : public Contact {
 public:
   ParticleContact(SphericParticle &i, SphericParticle &j);
   ParticleContact(SphericParticle *i, SphericParticle *j);
-  ParticleContact(std::shared_ptr<SphericParticle> i,
-                  std::shared_ptr<SphericParticle> j);
+  ParticleContact(std::shared_ptr<Entity> i,
+                  std::shared_ptr<Entity> j);
 
   std::shared_ptr<Entity> get_particle(int i) const;
 
@@ -39,6 +39,7 @@ struct ContactCollection {
 public:
   void add_contact_pair(std::shared_ptr<ParticleContact> const &pair);
   void add_contact_pair(std::shared_ptr<BoundaryContact> const &pair);
+  void clear_contacts();
 
 public:
   std::vector<std::shared_ptr<Contact>> particle_sets;

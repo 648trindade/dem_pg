@@ -13,6 +13,7 @@ void ContactForceCalculator::add_force(std::shared_ptr<Contact> contact) {
     }
 
     Vector direction = p1->position - p2->position;
+    // TODO: improve force calculation
     Force force = direction * (stiffness / direction.norm());
 
     // action and reaction
@@ -32,3 +33,18 @@ InteractionForceAssembler::InteractionForceAssembler(
         InteractionForceCollection &interaction_forces_collection)
     : collection(collection),
       interaction_forces_collection(interaction_forces_collection) {}
+
+void InteractionForceAssembler::search_contacts(std::vector<std::shared_ptr<Entity>> const& particles)
+{
+  this->collection.clear_contacts();
+  for (int i = 0; i < particles.size(); i++)
+  {
+    auto& first_particle = particles[i];
+    for (int j = i + 1; j < particles.size(); j++)
+    {
+      auto& second_particle = particles[j];
+      // double d = Polymorphic::distance(first_particle.get(), second_particle.get());
+      this->collection.add_contact_pair(std::make_shared<ParticleContact>(first_particle, second_particle));
+    }
+  }
+}

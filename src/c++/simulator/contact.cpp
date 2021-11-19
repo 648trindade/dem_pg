@@ -10,8 +10,8 @@ ParticleContact::ParticleContact(SphericParticle *i, SphericParticle *j) {
   particles.push_back(std::make_shared<SphericParticle>(*j));
 }
 
-ParticleContact::ParticleContact(std::shared_ptr<SphericParticle> i,
-                                 std::shared_ptr<SphericParticle> j) {
+ParticleContact::ParticleContact(std::shared_ptr<Entity> i,
+                                 std::shared_ptr<Entity> j) {
   particles.push_back(i);
   particles.push_back(j);
 }
@@ -44,4 +44,9 @@ void ContactCollection::add_contact_pair(std::shared_ptr<ParticleContact> const&
 void ContactCollection::add_contact_pair(
     std::shared_ptr<BoundaryContact> const& pair) {
   particle_sets.push_back(pair);
+}
+
+void ContactCollection::clear_contacts()
+{
+  particle_sets.clear();
 }
