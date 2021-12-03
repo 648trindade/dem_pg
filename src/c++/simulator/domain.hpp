@@ -21,7 +21,7 @@ public:
 
   void set_assembler(InteractionForceAssembler &interaction_force_assembler);
   void set_geometry();
-  void add_boundaries();
+  void add_boundary(std::shared_ptr<Boundary> boundary);
   double get_time() const;
   void set_time(double t);
   void assemble_particle_forces();
@@ -30,7 +30,7 @@ public:
 public:
   std::vector<std::shared_ptr<Entity>> particles;
   InteractionForceAssembler *interaction_force_assembler;
-  std::vector<Boundary *> boundaries;
+  std::vector<std::shared_ptr<Boundary>> boundaries;
   Geometry *geometry;
 
 private:

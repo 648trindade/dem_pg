@@ -18,7 +18,9 @@ void Domain::set_assembler(
 
 void Domain::set_geometry() {}
 
-void Domain::add_boundaries() {}
+void Domain::add_boundary(std::shared_ptr<Boundary> boundary) {
+    boundaries.push_back(boundary);
+}
 
 double Domain::get_time() const { return _time; }
 

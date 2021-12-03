@@ -212,8 +212,6 @@ TEST_CASE("Test Particle to Wall Collision") {
   auto w1 = std::make_shared<InfinityHorizontalWall>(0.0);
   auto pair = std::make_shared<BoundaryContact>(p1, w1);
 
-  particles.push_back(w1);
-
   ContactCollection collection;
   // collection.add_contact_pair(pair);
 
@@ -225,6 +223,8 @@ TEST_CASE("Test Particle to Wall Collision") {
   /* Creating Simulation domain */
   auto assembler = InteractionForceAssembler(collection, int_force_collection);
   Domain domain{particles, assembler};
+
+  domain.add_boundary(w1);
 
   /* Simulate */
   double final_time = 0.0;

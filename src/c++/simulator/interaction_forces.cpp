@@ -34,7 +34,10 @@ InteractionForceAssembler::InteractionForceAssembler(
     : collection(collection),
       interaction_forces_collection(interaction_forces_collection) {}
 
-void InteractionForceAssembler::search_contacts(std::vector<std::shared_ptr<Entity>> const& particles)
+void InteractionForceAssembler::search_contacts(
+    std::vector<std::shared_ptr<Entity>> const& particles,
+    std::vector<std::shared_ptr<Boundary>> const& boundaries
+)
 {
   this->collection.clear_contacts();
   for (int i = 0; i < particles.size(); i++)
@@ -45,6 +48,16 @@ void InteractionForceAssembler::search_contacts(std::vector<std::shared_ptr<Enti
       auto& second_particle = particles[j];
       // double d = Polymorphic::distance(first_particle.get(), second_particle.get());
       this->collection.add_contact_pair(std::make_shared<ParticleContact>(first_particle, second_particle));
+    }
+  }
+  for (int i = 0; i < particles.size(); i++)
+  {
+    auto& first_particle = particles[i];
+    for (int j = 0; j < boundaries.size(); j++)
+    {
+      auto& boundary = boundaries[j];
+      // double d = Polymorphic::distance(first_particle.get(), boundary.get());
+      this->collection.add_contact_pair(std::make_shared<ParticleContact>(first_particle, boundary));
     }
   }
 }
