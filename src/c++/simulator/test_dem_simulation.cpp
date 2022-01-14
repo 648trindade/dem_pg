@@ -138,7 +138,7 @@ TEST_CASE("Test Particle Collision") {
 
   /* Creating contacts collections */
   auto contact_collection = ContactCollection{};
-contact_collection.add_contact_pair(std::make_shared<ParticleContact>(p1, p2));
+// contact_collection.add_contact_pair(std::make_shared<ParticleContact>(p1, p2));
 
   /* Setting interaction forces */
   auto force_collection = InteractionForceCollection{};
@@ -210,10 +210,10 @@ TEST_CASE("Test Particle to Wall Collision") {
 
   /* Creating contacts collections */
   auto w1 = std::make_shared<InfinityHorizontalWall>(0.0);
-  auto pair = std::make_shared<BoundaryContact>(p1, w1);
+  std::vector<std::shared_ptr<Boundary>> boundaries;
+  boundaries.push_back(w1);
 
   ContactCollection collection;
-  collection.add_contact_pair(pair);
 
   /* Setting intertaction forces */
   auto contact_force = std::make_shared<ContactForceCalculator>(1e+5);
@@ -222,7 +222,7 @@ TEST_CASE("Test Particle to Wall Collision") {
 
   /* Creating Simulation domain */
   auto assembler = InteractionForceAssembler(collection, int_force_collection);
-  Domain domain{particles, assembler};
+  Domain domain{particles, boundaries, assembler};
 
   /* Simulate */
   double final_time = 0.0;

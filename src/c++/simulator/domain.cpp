@@ -2,14 +2,22 @@
 
 Domain::Domain() {}
 
+Domain::Domain(InteractionForceAssembler &interaction_force_assembler) {
+  set_assembler(interaction_force_assembler);
+}
+
 Domain::Domain(std::vector<std::shared_ptr<Entity>> const& particles,
                InteractionForceAssembler &interaction_force_assembler)
     : particles(particles),
       interaction_force_assembler(&interaction_force_assembler) {}
 
-Domain::Domain(InteractionForceAssembler &interaction_force_assembler) {
-  set_assembler(interaction_force_assembler);
-}
+Domain::Domain(
+      std::vector<std::shared_ptr<Entity>> const &particles,
+      std::vector<std::shared_ptr<Boundary>> const &boundaries,
+      InteractionForceAssembler &interaction_force_assembler)
+      : particles(particles),
+      boundaries(boundaries),
+      interaction_force_assembler(&interaction_force_assembler) {}
 
 void Domain::set_assembler(
     InteractionForceAssembler &interaction_force_assembler) {
@@ -18,7 +26,9 @@ void Domain::set_assembler(
 
 void Domain::set_geometry() {}
 
-void Domain::add_boundaries() {}
+void Domain::add_boundary(std::shared_ptr<Boundary> boundary) {
+    boundaries.push_back(boundary);
+}
 
 double Domain::get_time() const { return _time; }
 

@@ -11,9 +11,13 @@
 struct Domain {
 public:
   Domain();
+  Domain(InteractionForceAssembler &interaction_force_assembler);
   Domain(std::vector<std::shared_ptr<Entity>> const &particles,
          InteractionForceAssembler &interaction_force_assembler);
-  Domain(InteractionForceAssembler &interaction_force_assembler);
+  Domain(
+      std::vector<std::shared_ptr<Entity>> const &particles,
+      std::vector<std::shared_ptr<Boundary>> const &boundaries,
+      InteractionForceAssembler &interaction_force_assembler);
 
   template <class T> void add_particle(T &particle) {
     particles.push_back(std::make_shared<T>(particle));
@@ -21,7 +25,7 @@ public:
 
   void set_assembler(InteractionForceAssembler &interaction_force_assembler);
   void set_geometry();
-  void add_boundaries();
+  void add_boundary(std::shared_ptr<Boundary> boundary);
   double get_time() const;
   void set_time(double t);
   void assemble_particle_forces();
@@ -30,7 +34,7 @@ public:
 public:
   std::vector<std::shared_ptr<Entity>> particles;
   InteractionForceAssembler *interaction_force_assembler;
-  std::vector<Boundary *> boundaries;
+  std::vector<std::shared_ptr<Boundary>> boundaries;
   Geometry *geometry;
 
 private:
