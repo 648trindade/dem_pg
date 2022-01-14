@@ -37,7 +37,7 @@ public:
       ContactCollection &collection,
       InteractionForceCollection &interaction_forces_collection);
 
-void InteractionForceAssembler::search_contacts(
+void search_contacts(
     std::vector<std::shared_ptr<Entity>> const& particles,
     std::vector<std::shared_ptr<Boundary>> const& boundaries
 );
