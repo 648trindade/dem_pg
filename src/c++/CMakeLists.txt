@@ -5,6 +5,8 @@ set(BASE_LIB_FILES
     simulator/analitic_geometry.hpp
     simulator/boundaries.cpp
     simulator/boundaries.hpp
+    simulator/builder.cpp
+    simulator/builder.hpp
     simulator/contact.cpp
     simulator/contact.hpp
     simulator/domain.cpp
@@ -47,6 +49,17 @@ target_link_libraries(
 )
 
 add_executable(
+    test_builder
+       catch.hpp
+       simulator/test_builder.cpp
+)
+target_link_libraries(
+    test_builder
+        test_main
+        dem_base
+)
+
+add_executable(
     test_geometry
         catch.hpp
         simulator/test_geometry.cpp
@@ -57,6 +70,10 @@ target_link_libraries(
         dem_base
 )
 
+add_test(
+    NAME Builder
+    COMMAND $<TARGET_FILE:test_builder>
+)
 add_test(
     NAME Geometry
     COMMAND $<TARGET_FILE:test_geometry>

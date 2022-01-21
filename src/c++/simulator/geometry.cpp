@@ -40,7 +40,7 @@ Point Point::operator/(const double &other) const {
   return Point(x / other, y / other, z / other);
 }
 
-bool Point::operator==(const Point &other) {
+bool Point::operator==(const Point &other) const {
   return (x == other.x && y == other.y && z == other.z);
 }
 

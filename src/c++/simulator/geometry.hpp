@@ -19,7 +19,7 @@ public:
   Point operator-() const;
   Point operator*(const double &other) const;
   Point operator/(const double &other) const;
-  bool operator==(const Point &other);
+  bool operator==(const Point &other) const;
   Point &operator=(const Point &other);
 
   double norm() const;

@@ -5,6 +5,7 @@
 struct IMaterial {
 public:
   virtual Material get_type() = 0;
+  virtual ~IMaterial() = default;
   double get_density() const;
 
 public:
