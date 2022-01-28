@@ -2,6 +2,7 @@
 
 #include <simulator/analitic_geometry.hpp>
 #include <simulator/boundaries.hpp>
+#include <simulator/builder.hpp>
 #include <simulator/domain.hpp>
 #include <simulator/integrator.hpp>
 #include <simulator/interaction_forces.hpp>
