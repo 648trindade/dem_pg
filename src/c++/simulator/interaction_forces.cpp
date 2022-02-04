@@ -40,24 +40,24 @@ void InteractionForceAssembler::search_contacts(
 )
 {
   this->collection.clear_contacts();
+
   for (int i = 0; i < particles.size(); i++)
   {
     auto& first_particle = particles[i];
     for (int j = i + 1; j < particles.size(); j++)
     {
       auto& second_particle = particles[j];
-      // double d = Polymorphic::distance(first_particle.get(), second_particle.get());
       this->collection.add_contact_pair(std::make_shared<ParticleContact>(first_particle, second_particle));
     }
   }
+
   for (int i = 0; i < particles.size(); i++)
   {
     auto& first_particle = particles[i];
     for (int j = 0; j < boundaries.size(); j++)
     {
       auto& boundary = boundaries[j];
-      // double d = Polymorphic::distance(first_particle.get(), boundary.get());
-      this->collection.add_contact_pair(std::make_shared<ParticleContact>(first_particle, boundary));
+      this->collection.add_contact_pair(std::make_shared<BoundaryContact>(first_particle, boundary));
     }
   }
 }

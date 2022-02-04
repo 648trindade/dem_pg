@@ -12,26 +12,21 @@ struct Contact {
 
 struct ParticleContact : public Contact {
 public:
-  ParticleContact(SphericParticle &i, SphericParticle &j);
-  ParticleContact(SphericParticle *i, SphericParticle *j);
-  ParticleContact(std::shared_ptr<Entity> i,
-                  std::shared_ptr<Entity> j);
+  ParticleContact(std::shared_ptr<Particle> i, std::shared_ptr<Particle> j);
+  std::shared_ptr<Entity> get_particle(int i) const override;
 
-  std::shared_ptr<Entity> get_particle(int i) const;
-
-public:
-  std::vector<std::shared_ptr<Entity>> particles;
+private:
+  std::vector<std::shared_ptr<Particle>> particles;
 };
 
 struct BoundaryContact : public Contact {
 public:
-  BoundaryContact(SphericParticle *p, Boundary *b);
-  BoundaryContact(std::shared_ptr<SphericParticle> p,
+  BoundaryContact(std::shared_ptr<Particle> p,
                   std::shared_ptr<Boundary> b);
 
   std::shared_ptr<Entity> get_particle(int i) const override;
 
-public:
+private:
   std::vector<std::shared_ptr<Entity>> particles;
 };
 
