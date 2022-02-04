@@ -135,7 +135,7 @@ TEST_CASE("Test Particle Collision") {
       -10.0, 0.0, 0.0,
       // Radius:
       1.0);
-  auto particles = std::vector<std::shared_ptr<Entity>>{{p1, p2}};
+  auto particles = std::vector<std::shared_ptr<Particle>>{{p1, p2}};
 
   /* Creating contacts collections */
   auto contact_collection = ContactCollection{};
@@ -153,7 +153,7 @@ TEST_CASE("Test Particle Collision") {
   double final_time = 0.0;
   integrate(domain, 0.001, 0.0, 0.02,
             [&](double time,
-                std::vector<std::shared_ptr<Entity>> const &particles) {
+                std::vector<std::shared_ptr<Particle>> const &particles) {
               if (std::abs(time - 0.001) < 1e-8) {
                 REQUIRE(std::abs(p1->position.x - 1.01) < TOLERANCE);
                 REQUIRE(std::abs(p2->position.x - 3.09) < TOLERANCE);
@@ -206,7 +206,7 @@ TEST_CASE("Test Particle to Wall Collision") {
       // Radius:
       1.0);
 
-  std::vector<std::shared_ptr<Entity>> particles;
+  std::vector<std::shared_ptr<Particle>> particles;
   particles.push_back(p1);
 
   /* Creating contacts collections */
@@ -229,7 +229,7 @@ TEST_CASE("Test Particle to Wall Collision") {
   double final_time = 0.0;
   integrate(
       domain, 0.001, 0.0, 0.02,
-      [&](double time, std::vector<std::shared_ptr<Entity>> particles) {
+      [&](double time, std::vector<std::shared_ptr<Particle>> particles) {
         if (std::abs(time - 0.001) < 1e-8) {
           REQUIRE(std::abs(p1->position.y - 1.0) < TOLERANCE);
         }

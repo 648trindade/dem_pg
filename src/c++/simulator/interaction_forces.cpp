@@ -35,7 +35,7 @@ InteractionForceAssembler::InteractionForceAssembler(
       interaction_forces_collection(interaction_forces_collection) {}
 
 void InteractionForceAssembler::search_contacts(
-    std::vector<std::shared_ptr<Entity>> const& particles,
+    std::vector<std::shared_ptr<Particle>> const& particles,
     std::vector<std::shared_ptr<Boundary>> const& boundaries
 )
 {

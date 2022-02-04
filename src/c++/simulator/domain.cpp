@@ -6,13 +6,13 @@ Domain::Domain(InteractionForceAssembler &interaction_force_assembler) {
   set_assembler(interaction_force_assembler);
 }
 
-Domain::Domain(std::vector<std::shared_ptr<Entity>> const& particles,
+Domain::Domain(std::vector<std::shared_ptr<Particle>> const& particles,
                InteractionForceAssembler &interaction_force_assembler)
     : particles(particles),
       interaction_force_assembler(&interaction_force_assembler) {}
 
 Domain::Domain(
-      std::vector<std::shared_ptr<Entity>> const &particles,
+      std::vector<std::shared_ptr<Particle>> const &particles,
       std::vector<std::shared_ptr<Boundary>> const &boundaries,
       InteractionForceAssembler &interaction_force_assembler)
       : particles(particles),

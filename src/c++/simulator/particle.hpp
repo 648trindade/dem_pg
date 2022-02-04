@@ -33,7 +33,9 @@ public:
   IGeometry *geometry;
 };
 
-struct SphericParticle : public Entity {
+struct Particle : public Entity {};
+
+struct SphericParticle : public Particle {
   SphericParticle(double x, double y, double z, double vx, double vy, double vz,
                   double r, double rho = 1.0);
   SphericParticle(Position p, Velocity v, double r, LinearMaterial *m);

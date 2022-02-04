@@ -7,5 +7,5 @@
 
 void integrate(
     Domain &domain, double delta_t, double initial_time, double final_time,
-    std::function<void(double, std::vector<std::shared_ptr<Entity>> const
+    std::function<void(double, std::vector<std::shared_ptr<Particle>> const
                                    &)> const &callback);

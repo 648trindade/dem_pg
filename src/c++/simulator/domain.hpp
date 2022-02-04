@@ -12,10 +12,10 @@ struct Domain {
 public:
   Domain();
   Domain(InteractionForceAssembler &interaction_force_assembler);
-  Domain(std::vector<std::shared_ptr<Entity>> const &particles,
+  Domain(std::vector<std::shared_ptr<Particle>> const &particles,
          InteractionForceAssembler &interaction_force_assembler);
   Domain(
-      std::vector<std::shared_ptr<Entity>> const &particles,
+      std::vector<std::shared_ptr<Particle>> const &particles,
       std::vector<std::shared_ptr<Boundary>> const &boundaries,
       InteractionForceAssembler &interaction_force_assembler);
 
@@ -32,7 +32,7 @@ public:
   void integrate(double delta_t);
 
 public:
-  std::vector<std::shared_ptr<Entity>> particles;
+  std::vector<std::shared_ptr<Particle>> particles;
   InteractionForceAssembler *interaction_force_assembler;
   std::vector<std::shared_ptr<Boundary>> boundaries;
   Geometry *geometry;

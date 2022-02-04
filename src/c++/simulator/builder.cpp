@@ -13,13 +13,13 @@
 #include <stdexcept>
 #include <string>
 
-std::vector<std::shared_ptr<SphericParticle>> ParticlesBuilder::create(
+std::vector<std::shared_ptr<Particle>> ParticlesBuilder::create(
     const std::vector<Position>& positions,
     const std::vector<Velocity>& velocities,
     const std::vector<double>& radiuses
 )
 {
-    std::vector<std::shared_ptr<SphericParticle>> collection;
+    std::vector<std::shared_ptr<Particle>> collection;
     size_t num_particles = positions.size();
 
     if (positions.size() != velocities.size() || velocities.size() != radiuses.size())

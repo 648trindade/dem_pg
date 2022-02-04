@@ -9,7 +9,7 @@
 
 class ParticlesBuilder {
 public:
-    static std::vector<std::shared_ptr<SphericParticle>> create(
+    static std::vector<std::shared_ptr<Particle>> create(
         const std::vector<Position>& positions,
         const std::vector<Velocity>& velocities,
         const std::vector<double>& radiuses
