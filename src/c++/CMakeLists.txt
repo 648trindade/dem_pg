@@ -23,6 +23,8 @@ set(BASE_LIB_FILES
     simulator/my_types.hpp
     simulator/particle.cpp
     simulator/particle.hpp
+    io/simulator_io.hpp
+    io/simulator_io.cpp
 )
 
 add_library(

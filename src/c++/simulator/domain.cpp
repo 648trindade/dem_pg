@@ -52,3 +52,7 @@ void Domain::integrate(double delta_t) {
 
   _time += delta_t;
 }
+
+const std::vector<std::shared_ptr<Particle>> &Domain::get_particles() const {
+    return this->particles;
+}

@@ -8,6 +8,7 @@
 #include <simulator/interaction_forces.hpp>
 #include <simulator/my_types.hpp>
 #include <simulator/particle.hpp>
+#include <io/simulator_io.hpp>
 
 #include <fstream>
 
@@ -228,20 +229,9 @@ TEST_CASE("Test Particle to Wall Collision") {
   Domain domain{particles, boundaries, assembler};
 
   /* Simulate */
-  auto save = [](double time, std::vector<std::shared_ptr<Particle>> const& particles) {
-    auto file = std::ofstream("particles_" + std::to_string(time) + ".csv");
-    file << "r,px,py,pz,vx,vy,vz\n";
-    for (auto const& particle : particles) {
-        auto const& p = particle->position;
-        auto const& v = particle->velocity;
-        file << particle->get_radius() << ',';
-        file << p.x << "," << p.y << "," << p.z << ",";
-        file << v.x << "," << v.y << "," << v.z << '\n';
-    }
-    file.close();
-  };
+  csv_IO csv_io(domain);
 
-  double some_interval = 0.05;
+  double some_interval = 0.01;
   double last_save = 0.0;
   double eps = 1e-4;
   integrate(
@@ -249,7 +239,7 @@ TEST_CASE("Test Particle to Wall Collision") {
       [&](double time, std::vector<std::shared_ptr<Particle>> const& particles) {
 
           if ( fabs((time - last_save) - some_interval) <= eps) {
-              save(time, particles);
+              csv_io.Write();
               last_save = time;
           }
 

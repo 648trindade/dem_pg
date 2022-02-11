@@ -31,6 +31,8 @@ public:
   void assemble_particle_forces();
   void integrate(double delta_t);
 
+  const std::vector<std::shared_ptr<Particle>>& get_particles() const;
+
 public:
   std::vector<std::shared_ptr<Particle>> particles;
   InteractionForceAssembler *interaction_force_assembler;
